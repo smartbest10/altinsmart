@@ -1,31 +1,30 @@
+const { BrandModel } = require("../core/db/brand");
+const { createBrandModel } = require("../model/brand");
 
 
 const createBrandController = async (req, res, next) => {
     const {
-      productname,category,sellerid,
-      productprice,
-      productbrand,
-      productimage,
-      productnegiotable,
-      productdescription,
+     sellerid ,  brandname
     } = req.body;
-    const name = productname.toLowerCase();
-    const price = productprice;
-    const brand = productbrand;
-    const image = productimage;
-    const negiotable = productnegiotable;
-    const description = productdescription;
+    const name = brandname.toLowerCase();
+    const brand = await BrandModel.findOne({ brandname: name });
+    if (brand) {
+    
+      return res.status(400).json({
+        status_code: 400,
+        status: false,
+        message: "brand already exist",
+        data: [],
+        error: "brand already exist",
+      });
+    }
+
     try {
       const data = {
-        name,
-        price,
-        brand,
-        image,
-        negiotable,
-        description,category , sellerid
+        sellerid ,  name
       };
   
-      let trainee = await createProductModel(data, res);
+      let trainee = await createBrandModel(data, res);
       return res.status(200).json({
         status_code: 200,
         status: true,
@@ -38,4 +37,6 @@ const createBrandController = async (req, res, next) => {
     }
   };
   
-  
+module.exports = {
+    createBrandController
+  }
