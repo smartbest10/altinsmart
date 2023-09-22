@@ -5,6 +5,7 @@ dotenv.config({ path: ".env" });
 const { coonectdb } = require("./helper/conectdb");
 const cors = require("cors");
 const app = express();
+const { PORT } = require("./helper/utils")
 
 //for customer
 const customerauth = require('./customer/route/auth')
@@ -14,12 +15,15 @@ const customerprofile = require('./customer/route/profile')
 const sellerauth = require('./seller/route/auth')
 const sellerproduct = require('./seller/route/product');
 const sellerprofile = require('./seller/route/profile');
-const { PORT } = require("./helper/utils");
+const sellerbrand = require('./seller/route/brand');
+;
 
 
 
 // for admin 
 const adminauth = require('./admin/route/auth')
+const admincategory = require('./admin/route/category')
+const adminseller = require('./admin/route/seller')
 
 
 //connecting the database
@@ -42,10 +46,13 @@ app.use(customer, customerprofile)
 app.use(seller, sellerauth)
 app.use(seller, sellerproduct)
 app.use(seller, sellerprofile)
+app.use(seller, sellerbrand)
 
 
 //for admin
 app.use(admin, adminauth)
+app.use(admin, admincategory)
+app.use(admin, adminseller)
 
 
 

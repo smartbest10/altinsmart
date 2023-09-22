@@ -10,10 +10,12 @@ const Productschema = new schema({
             type:Number
         },
         brand:{
-            type:String
+            type:  mongoose.Schema.Types.ObjectId,
+            ref:'brand'
         },
         category:{
-            type:String
+            type:  mongoose.Schema.Types.ObjectId,
+            ref:'category'
         },
         sellerid: {
             type:  mongoose.Schema.Types.ObjectId,

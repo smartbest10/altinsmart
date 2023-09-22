@@ -24,11 +24,11 @@ const createcategoryModel = async (data, res) => {
   
   const updatecategoryModel = async (data, res) => {
     try {
-      const { category_description, category , categoryid } = data;
+      const { category_description, categoryname , categoryid } = data;
   
       const form = await CategoryModel.findByIdAndUpdate(categoryid, {
         $set: {
-          category_description , category
+          category_description , category:categoryname
         },
       });
   

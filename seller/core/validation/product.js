@@ -9,13 +9,13 @@ const createProductValidation = (req, res, next) => {
     // adminId: joi.string().required(),
     productname: joi.string().required(),
     category: joi.string().required(),
-    productprice: joi.string().required(),
+    productprice: joi.number().required(),
     productbrand: joi.string().required(),
     productimage: joi.string().required(),
-    productnegiotable: joi.string().required(),
+    productnegiotable: joi.boolean().required(),
     productdescription: joi.string().required(),
     sellerid: joi.string().required(),
-  });
+  }); 
   const { error } = schema.validate(req.body);
   if (error) {
     let err = error.details[0].message;
