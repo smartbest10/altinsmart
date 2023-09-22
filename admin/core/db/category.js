@@ -10,6 +10,9 @@ const categoryschema = new schema({
         category_description: {
             type:String,
         },
+        category_image: {
+            type:String,
+        },
    
     createdAt : {
         type: Date,

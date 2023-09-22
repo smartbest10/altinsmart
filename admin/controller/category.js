@@ -6,7 +6,7 @@ const {
 } = require("../model/category");
 
 const createcategoryController = async (req, res, next) => {
-  const { category_description, category } = req.body;
+  const { category_description, category , category_image} = req.body;
   const categoryname = category.toLowerCase();
   try {
     const cat = await CategoryModel.findOne({ category: categoryname });
@@ -22,7 +22,7 @@ const createcategoryController = async (req, res, next) => {
 
     const data = {
       categoryname,
-      category_description,
+      category_description, category_image
     };
 
     let trainee = await createcategoryModel(data, res);
@@ -72,7 +72,7 @@ const retrieveallcategoryController = async (req, res, next) => {
 };
 
 const updatecategoryController = async (req, res, next) => {
-  const { category_description, category, categoryid } = req.body;
+  const { category_description, category, categoryid , category_image } = req.body;
   const categoryname = category.toLowerCase();
   try {
       const cat = await CategoryModel.findOne({category:categoryname});
@@ -89,7 +89,7 @@ const updatecategoryController = async (req, res, next) => {
 
     const data = {
       category_description,
-      categoryname,
+      categoryname, category_image ,
       categoryid,
     };
 

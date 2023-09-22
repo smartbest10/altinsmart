@@ -6,6 +6,7 @@ const createcategoryValidation = (req, res, next) => {
         adminid: joi.string().required(),
         category: joi.string().required(),
       category_description: joi.string().required(),
+      category_image: joi.string().required(),
     });
     const { error } = schema.validate(req.body);
     if (error) {
@@ -23,6 +24,7 @@ const updatecategoryValidation = (req, res, next) => {
         category: joi.string().required(),
         categoryid: joi.string().required(),
       category_description: joi.string(),
+      category_image: joi.string().required(),
     });
     const { error } = schema.validate(req.body);
     if (error) {
