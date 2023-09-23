@@ -55,7 +55,6 @@ const CustomerSignupController = async (req, res, next) => {
 const CustomerLoginController = async (req, res, next) => {
   const { email, password } = req.body;
   const customerEmail = email.toLowerCase()
-  console.log(customerEmail)
   try {
     const customerDetails = await CustomerModel.findOne({email: customerEmail });
     if (!customerDetails) {
