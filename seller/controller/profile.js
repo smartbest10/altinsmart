@@ -127,13 +127,27 @@ const Sellerupdateprofile3Controller = async (req, res, next) => {
 };
 
 const SelleraddcategoryController = async (req, res, next) => {
-  const { sellerid, categoryid } = req.body;
+  const { sellerid, category } = req.body;
   try {
-    const seller = await SellerModel.findById(sellerid);
-    const sellercategory = seller.store_category;
+      const seller = await SellerModel.findById(sellerid);
+      //lets do a check to ensure that the categories dont exist twice
+      const sellercategory = seller.store_category;
+      let newcategory = []
+      let existcategory = []
+      category.forEach((x) => {
+          const checkcategory = sellercategory.find((item) => item.categoryid == x.categoryid) 
+          console.log('true', checkcategory)
+          if (checkcategory) {
+            existcategory.push(x)
+        } else {
+            newcategory.push(x)
+        }
+      })
+   
+      console.log('exist category', existcategory)
     const data = {
       sellerid,
-      categoryid,
+     newcategory
     };
 
     let trainee = await SelleraddcategoryModel(data, res);

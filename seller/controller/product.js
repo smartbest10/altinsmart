@@ -1,3 +1,4 @@
+const { CategoryModel } = require("../../admin/core/db/category");
 const { ProductModel } = require("../core/db/product");
 const {
   createProductModel,
@@ -6,10 +7,13 @@ const {
   deleteProductModel,
   retrievesellerProductModel,
 } = require("../model/product");
+const { sellerRetrievecategoryModel } = require("../model/profile");
 
 const createProductController = async (req, res, next) => {
   const {
-    productname,category,sellerid,
+    productname,
+    category,
+    sellerid,
     productprice,
     productbrand,
     productimage,
@@ -29,7 +33,9 @@ const createProductController = async (req, res, next) => {
       brand,
       image,
       negiotable,
-      description,category , sellerid
+      description,
+      category,
+      sellerid,
     };
 
     let trainee = await createProductModel(data, res);
@@ -44,7 +50,6 @@ const createProductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
-
 
 const updateProductController = async (req, res, next) => {
   const {
@@ -137,11 +142,45 @@ const deleteProductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const sellerRetrievecategoryController = async (req, res, next) => {
+  try {
+    const { sellerid } = req.body;
+    const data = { sellerid };
+
+    let trainee = await sellerRetrievecategoryModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+
+const sellerRetrieveorinalcategoryController = async (req, res, next) => {
+  try {
+    let trainee = await CategoryModel.find();
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 
 module.exports = {
   createProductController,
   updateProductController,
   // retrieveAllProductController,
-  retrievesellerProductController ,
-  deleteProductController
+  retrievesellerProductController,
+  deleteProductController,
+  sellerRetrievecategoryController,
+  sellerRetrieveorinalcategoryController,
 };

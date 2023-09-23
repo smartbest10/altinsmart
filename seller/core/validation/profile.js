@@ -75,7 +75,7 @@ const sellerupdateprofile3Validation = (req, res, next) => {
 
 const selleraddcategoryValidation = (req, res, next) => {
   const schema = joi.object({
-    categoryid: joi.string().required(),
+    category: joi.array().required(),
     sellerid: joi.string().required(),
   });
   const { error } = schema.validate(req.body);

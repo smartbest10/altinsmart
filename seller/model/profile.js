@@ -1,3 +1,4 @@
+const { CategoryModel } = require("../../admin/core/db/category");
 const { SellerModel } = require("../core/db/seller");
 
 const Sellerupdateprofile1Model = async (data, res) => {
@@ -96,25 +97,29 @@ const Sellerupdateprofile3Model = async (data, res) => {
 };
 const SelleraddcategoryModel = async (data, res) => {
   try {
-      const { sellerid, categoryid } = data;
-      let categoryAdded
-    //   checking if the seller has this category already 
-    const seller = await SellerModel.findById(sellerid)
-      const sellercategory = seller.store_category
-      const category = sellercategory.find(x => x.categoryid === categoryid) 
-      if (category) {
-          categoryAdded = false
-          return categoryAdded
-      }
+    const { sellerid, newcategory } = data;
     const form = await SellerModel.findByIdAndUpdate(sellerid, {
       $push: {
-        store_category: {
-          categoryid: categoryid,
-        },
+        store_category: newcategory,
       },
     });
-    categoryAdded =  true
+    categoryAdded = true;
     return categoryAdded;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+    // handleError(error.message)(res)
+  }
+};
+const sellerRetrievecategoryModel = async (data, res) => {
+  try {
+    const { sellerid } = data;
+      const form = await SellerModel.findById(sellerid).select("store_category");
+      const category = form.store_category.map((x) => {
+          return x.categoryid
+      })
+      const categories = await CategoryModel.find({_id:category})
+    return categories;
   } catch (error) {
     console.log(error);
     return error.message;
@@ -123,11 +128,12 @@ const SelleraddcategoryModel = async (data, res) => {
 };
 const SelleraddaccountModel = async (data, res) => {
   try {
-      const { sellerid , account_type , account_url } = data;
+    const { sellerid, account_type, account_url } = data;
     const form = await SellerModel.findByIdAndUpdate(sellerid, {
       $push: {
         social_account: {
-            account_type , account_url
+          account_type,
+          account_url,
         },
       },
     });
@@ -140,14 +146,14 @@ const SelleraddaccountModel = async (data, res) => {
 };
 const SellerdeleteaccountModel = async (data, res) => {
   try {
-      const { sellerid , account_type , account_url , accountid } = data;
-   
+    const { sellerid, account_type, account_url, accountid } = data;
+
     const form = await SellerModel.findByIdAndUpdate(sellerid, {
-        $pull : {
-            store_account:{
-                _id : dependentId
-            }
-        }
+      $pull: {
+        store_account: {
+          _id: dependentId,
+        },
+      },
     });
     return form;
   } catch (error) {
@@ -161,5 +167,7 @@ module.exports = {
   Sellerupdateprofile1Model,
   SellerupdatephotoModel,
   Sellerupdateprofile2Model,
-  Sellerupdateprofile3Model, SelleraddcategoryModel , SelleraddaccountModel
+  Sellerupdateprofile3Model,
+  SelleraddcategoryModel,
+  SelleraddaccountModel, sellerRetrievecategoryModel
 };
