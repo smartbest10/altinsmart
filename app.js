@@ -24,6 +24,7 @@ const sellerbrand = require('./seller/route/brand');
 const adminauth = require('./admin/route/auth')
 const admincategory = require('./admin/route/category')
 const adminseller = require('./admin/route/seller')
+const adminlandingpage = require('./admin/route/landingpage')
 
 
 //connecting the database
@@ -53,6 +54,7 @@ app.use(seller, sellerbrand)
 app.use(admin, adminauth)
 app.use(admin, admincategory)
 app.use(admin, adminseller)
+app.use(admin, adminlandingpage)
 
 
 

@@ -24,7 +24,7 @@ router.post(
   customerupdatepasswordValidation,
   CustomerupdatepasswordController
 );
-router.get(
+router.post(
   "/retrieve/profile",
   customer_check_token,
   customerretrieveprofileValidation,
