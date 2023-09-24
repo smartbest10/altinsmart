@@ -1,7 +1,7 @@
-const { Sellerupdateprofile1Controller, Sellerupdateprofile2Controller, Sellerupdateprofile3Controller, SellerupdatephotoController, SelleraddsocialaccountController, SelleraddcategoryController } = require("../controller/profile");
+const { Sellerupdateprofile1Controller, Sellerupdateprofile2Controller, Sellerupdateprofile3Controller, SellerupdatephotoController, SelleraddsocialaccountController, SelleraddcategoryController, SelleraddbrandController } = require("../controller/profile");
 const { seller_check_token } = require("../core/authorization");
 const {
-  sellerupdateprofile1Validation, sellerupdateprofile2Validation, sellerupdateprofile3Validation, sellerupdatephotoValidation, selleraddaccountValidation, selleraddcategoryValidation,
+  sellerupdateprofile1Validation, sellerupdateprofile2Validation, sellerupdateprofile3Validation, sellerupdatephotoValidation, selleraddaccountValidation, selleraddcategoryValidation, selleraddbrandValidation,
 } = require("../core/validation/profile");
 
 const router = require("express").Router();
@@ -42,5 +42,12 @@ router.post(
   selleraddcategoryValidation,
   SelleraddcategoryController
 );
+router.post(
+  "/update/addbrand",
+  seller_check_token,
+  selleraddbrandValidation,
+  SelleraddbrandController
+);
+
 
 module.exports = router;

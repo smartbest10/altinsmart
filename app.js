@@ -15,7 +15,7 @@ const customerprofile = require('./customer/route/profile')
 const sellerauth = require('./seller/route/auth')
 const sellerproduct = require('./seller/route/product');
 const sellerprofile = require('./seller/route/profile');
-const sellerbrand = require('./seller/route/brand');
+// const sellerbrand = require('./seller/route/brand');
 ;
 
 
@@ -24,6 +24,7 @@ const sellerbrand = require('./seller/route/brand');
 const adminauth = require('./admin/route/auth')
 const admincategory = require('./admin/route/category')
 const adminseller = require('./admin/route/seller')
+const adminbrand = require('./admin/route/brand')
 const adminlandingpage = require('./admin/route/landingpage')
 
 
@@ -47,7 +48,7 @@ app.use(customer, customerprofile)
 app.use(seller, sellerauth)
 app.use(seller, sellerproduct)
 app.use(seller, sellerprofile)
-app.use(seller, sellerbrand)
+// app.use(seller, sellerbrand)
 
 
 //for admin
@@ -55,6 +56,7 @@ app.use(admin, adminauth)
 app.use(admin, admincategory)
 app.use(admin, adminseller)
 app.use(admin, adminlandingpage)
+app.use(admin, adminbrand)
 
 
 

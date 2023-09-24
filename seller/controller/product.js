@@ -1,5 +1,7 @@
+const { BrandModel } = require("../../admin/core/db/brand");
 const { CategoryModel } = require("../../admin/core/db/category");
 const { ProductModel } = require("../core/db/product");
+const { handleError } = require("../core/utils");
 const {
   createProductModel,
   updateProductModel,
@@ -7,7 +9,7 @@ const {
   deleteProductModel,
   retrievesellerProductModel,
 } = require("../model/product");
-const { sellerRetrievecategoryModel } = require("../model/profile");
+const { sellerRetrievecategoryModel, sellerRetrievebrandModel } = require("../model/profile");
 
 const createProductController = async (req, res, next) => {
   const {
@@ -174,6 +176,39 @@ const sellerRetrieveorinalcategoryController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const sellerRetrievebrandController = async (req, res, next) => {
+  try {
+    console.log('req1', req.body)
+    const { sellerid } = req.body;
+    const data = { sellerid };
+
+    let trainee = await sellerRetrievebrandModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+
+const sellerRetrieveorinalbrandController = async (req, res, next) => {
+  try {
+    let trainee = await BrandModel.find();
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 
 module.exports = {
   createProductController,
@@ -183,4 +218,6 @@ module.exports = {
   deleteProductController,
   sellerRetrievecategoryController,
   sellerRetrieveorinalcategoryController,
+  sellerRetrievebrandController,
+  sellerRetrieveorinalbrandController,
 };

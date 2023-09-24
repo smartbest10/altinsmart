@@ -1,3 +1,4 @@
+const { BrandModel } = require("../../admin/core/db/brand");
 const { CategoryModel } = require("../../admin/core/db/category");
 const { SellerModel } = require("../core/db/seller");
 
@@ -114,11 +115,41 @@ const SelleraddcategoryModel = async (data, res) => {
 const sellerRetrievecategoryModel = async (data, res) => {
   try {
     const { sellerid } = data;
-      const form = await SellerModel.findById(sellerid).select("store_category");
-      const category = form.store_category.map((x) => {
-          return x.categoryid
-      })
-      const categories = await CategoryModel.find({_id:category})
+    const form = await SellerModel.findById(sellerid).select("store_category");
+    const category = form.store_category.map((x) => {
+      return x.categoryid;
+    });
+    const categories = await CategoryModel.find({ _id: category });
+    return categories;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+    // handleError(error.message)(res)
+  }
+};
+const SelleraddbrandModel = async (data, res) => {
+  try {
+    const { sellerid, newbrand } = data;
+    const form = await SellerModel.findByIdAndUpdate(sellerid, {
+      $push: {
+        store_brand: newbrand,
+      },
+    });
+    return form;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+    // handleError(error.message)(res)
+  }
+};
+const sellerRetrievebrandModel = async (data, res) => {
+  try {
+    const { sellerid } = data;
+    const form = await SellerModel.findById(sellerid).select("store_brand");
+    const brand = form.store_brand.map((x) => {
+      return x.brandid;
+    });
+    const categories = await BrandModel.find({ _id: brand });
     return categories;
   } catch (error) {
     console.log(error);
@@ -169,5 +200,7 @@ module.exports = {
   Sellerupdateprofile2Model,
   Sellerupdateprofile3Model,
   SelleraddcategoryModel,
-  SelleraddaccountModel, sellerRetrievecategoryModel
+  SelleraddaccountModel,
+  sellerRetrievecategoryModel,
+  SelleraddbrandModel, sellerRetrievebrandModel
 };

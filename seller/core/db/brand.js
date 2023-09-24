@@ -1,28 +1,28 @@
-const mongoose = require('mongoose')
-const schema = mongoose.Schema
+// const mongoose = require('mongoose')
+// const schema = mongoose.Schema
 
-const brandschema = new schema({
+// const brandschema = new schema({
  
         
-        brandname:{
-            type:String
-        },
+//         brandname:{
+//             type:String
+//         },
         
-        sellerid: {
-            type:  mongoose.Schema.Types.ObjectId,
-             ref:'Seller'
-        },
-        brandApproved:{
-            type:Boolean , default : false
-        },
+//         sellerid: {
+//             type:  mongoose.Schema.Types.ObjectId,
+//              ref:'Seller'
+//         },
+//         brandApproved:{
+//             type:Boolean , default : false
+//         },
        
    
-    createdAt : {
-        type: Date,
-        default:Date.now
-    }
-})
-const BrandModel = mongoose.model('brand', brandschema )
-module.exports = {
-    BrandModel
-}
+//     createdAt : {
+//         type: Date,
+//         default:Date.now
+//     }
+// })
+// const BrandModel = mongoose.model('brand', brandschema )
+// module.exports = {
+//     BrandModel
+// }

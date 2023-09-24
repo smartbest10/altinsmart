@@ -87,6 +87,18 @@ const Sellerschema = new schema({
             }
         ]
     },
+    store_brand: {
+        default: [],
+        type: [
+            {
+               
+                brandid: {
+                    type:  mongoose.Schema.Types.ObjectId,
+                    ref:'brand'
+                }
+            }
+        ]
+    },
     social_account: {
         default: [],
         type: [
