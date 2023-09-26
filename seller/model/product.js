@@ -1,18 +1,39 @@
 const { ProductModel } = require("../core/db/product");
 const { create_seller_token } = require("../core/utils");
 
-
 const createProductModel = async (data, res) => {
   try {
     const {
-    
-        name , price , brand , image , negiotable , description , category , seller
+      name,
+      price,
+      brand,
+      negiotable,
+      description,
+      category,
+      seller,
+      images,
+      isdiscount,
+      discount_price,
+      discount_startdate,
+      discount_enddate,
     } = data;
 
     const form = await new ProductModel({
-        name , price , brand , image , negiotable , description , category , seller
+      name,
+      price,
+      brand,
+     
+      negiotable,
+      description,
+      category,
+      seller, discount: {
+        isdiscount,
+        discount_price,
+        discount_startdate,
+        discount_enddate,
+      } , images
     });
-    const productDetails = await form.save()
+    const productDetails = await form.save();
 
     return productDetails;
   } catch (error) {
@@ -24,16 +45,19 @@ const createProductModel = async (data, res) => {
 
 const updateProductModel = async (data, res) => {
   try {
-    const {
-    
-        name , price , brand , image , negiotable , description , productid
-    } = data;
+    const { name, price, brand, image, negiotable, description, productid } =
+      data;
 
-      const updateproduct = await ProductModel.findByIdAndUpdate(productid, {
-          $set: {
-            name , price , brand , image , negiotable , description ,
-       }
-   })
+    const updateproduct = await ProductModel.findByIdAndUpdate(productid, {
+      $set: {
+        name,
+        price,
+        brand,
+        image,
+        negiotable,
+        description,
+      },
+    });
 
     return updateproduct;
   } catch (error) {
@@ -43,12 +67,11 @@ const updateProductModel = async (data, res) => {
   }
 };
 
-
 const retrievesellerProductModel = async (data, res) => {
   try {
-    const { sellerid  } = data;
+    const { sellerid } = data;
 
-      const product = await ProductModel.find({sellerid})
+    const product = await ProductModel.find({ sellerid });
 
     return product;
   } catch (error) {
@@ -59,9 +82,9 @@ const retrievesellerProductModel = async (data, res) => {
 };
 const deleteProductModel = async (data, res) => {
   try {
-    const { productid  } = data;
+    const { productid } = data;
 
-      const product = await ProductModel.findByIdAndDelete(productid)
+    const product = await ProductModel.findByIdAndDelete(productid);
 
     return product;
   } catch (error) {
@@ -71,7 +94,9 @@ const deleteProductModel = async (data, res) => {
   }
 };
 
-
 module.exports = {
-    createProductModel , updateProductModel , retrievesellerProductModel , deleteProductModel
-}
+  createProductModel,
+  updateProductModel,
+  retrievesellerProductModel,
+  deleteProductModel,
+};

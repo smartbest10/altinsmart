@@ -34,7 +34,7 @@ const createcategoryController = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    handleError(error.message)(res);
+    handleError(error.message);
   }
 };
 
@@ -51,7 +51,7 @@ const retrievesinglecategoryController = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    handleError(error.message)(res);
+    handleError(error.message);
   }
 };
 
@@ -67,7 +67,7 @@ const retrieveallcategoryController = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    handleError(error.message)(res);
+    handleError(error.message);
   }
 };
 
@@ -102,7 +102,7 @@ const updatecategoryController = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    handleError(error.message)(res);
+    handleError(error.message);
   }
 };
 

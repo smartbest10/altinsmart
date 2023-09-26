@@ -13,6 +13,9 @@ const categoryschema = new schema({
         category_image: {
             type:String,
         },
+        product_purchased: {
+            type:Number, default:0
+        },
    
     createdAt : {
         type: Date,

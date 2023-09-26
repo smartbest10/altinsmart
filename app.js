@@ -10,6 +10,7 @@ const { PORT } = require("./helper/utils")
 //for customer
 const customerauth = require('./customer/route/auth')
 const customerprofile = require('./customer/route/profile')
+const customerlandingpage = require('./customer/route/landingpage')
 
 // for seller 
 const sellerauth = require('./seller/route/auth')
@@ -42,6 +43,7 @@ const admin = '/admin'
 //for customer
 app.use(customer, customerauth)
 app.use(customer, customerprofile)
+app.use(customer, customerlandingpage)
 
 
 //for seller

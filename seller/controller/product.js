@@ -18,14 +18,12 @@ const createProductController = async (req, res, next) => {
     sellerid,
     productprice,
     productbrand,
-    productimage,
     productnegiotable,
-    productdescription,
+    productdescription, images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate
   } = req.body;
   const name = productname.toLowerCase();
   const price = productprice;
   const brand = productbrand;
-  const image = productimage;
   const negiotable = productnegiotable;
   const description = productdescription;
   try {
@@ -33,7 +31,7 @@ const createProductController = async (req, res, next) => {
       name,
       price,
       brand,
-      image,
+      images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate ,
       negiotable,
       description,
       category,

@@ -113,7 +113,9 @@ const Sellerschema = new schema({
             }
         ]
     },
-       
+    product_purchased: {
+        type:Number, default:0
+    }, 
    
     createdAt : {
         type: Date,

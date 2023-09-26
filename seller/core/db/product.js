@@ -21,14 +21,37 @@ const Productschema = new schema({
             type:  mongoose.Schema.Types.ObjectId,
              ref:'Seller'
         },
-        image:{
-            type:String
+        images: {
+            default: [],
+            type: [
+                {
+                   
+                    image: {
+                        type:  String,
+                        ref:'brand'
+                    }
+                }
+            ]
         },
         description:{
             type:String
         },
         negiotable:{
             type:Boolean , default : false
+        },
+        discount:{
+            isdiscount:{
+                type:Boolean , default : false
+            }, 
+            discount_price:{
+                type:Number , default : 0
+            }, 
+            discount_startdate:{
+                type:String , default : ''
+            }, 
+            discount_enddate:{
+                type:String , default : ''
+            }, 
         },
         productApproved:{
             type:Boolean , default : false

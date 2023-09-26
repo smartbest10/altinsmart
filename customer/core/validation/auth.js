@@ -4,11 +4,10 @@ const { handleError } = require("../utils");
 const customersignupValidation = (req, res, next) => {
   const schema = joi.object({
     // adminId: joi.string().required(),
-   country: joi.string().required(), 
+    country: joi.string().required(),
     email: joi.string().required(),
     password: joi.string().required(),
     phone: joi.string().required(),
-    
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -40,7 +39,6 @@ const customerLoginValidation = (req, res, next) => {
   }
   return next();
 };
-
 
 const customerforgotpasswordValidation = (req, res, next) => {
   const schema = joi.object({
@@ -81,7 +79,29 @@ const customerResetpasswordValidation = (req, res, next) => {
   }
   return next();
 };
+const customerValidation = (req, res, next) => {
+  const schema = joi.object({
+    customerid: joi.string().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    let err = error.details[0].message;
+    // let errlen = err.split(' ')
+    // console.log('this is length ' , errlen.length)
+    return res.status(400).json({
+      status_code: 400,
+      status: false,
+      message: err,
+      data: [],
+      error: err,
+    });
+  }
+  return next();
+};
 
 module.exports = {
-    customersignupValidation, customerLoginValidation ,  customerforgotpasswordValidation , customerResetpasswordValidation
-}
+  customersignupValidation,
+  customerLoginValidation,
+  customerforgotpasswordValidation,
+  customerResetpasswordValidation, customerValidation
+};

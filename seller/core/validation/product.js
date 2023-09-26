@@ -11,10 +11,14 @@ const createProductValidation = (req, res, next) => {
     category: joi.string().required(),
     productprice: joi.number().required(),
     productbrand: joi.string().required(),
-    productimage: joi.string().required(),
+    images: joi.array().required(),
     productnegiotable: joi.boolean().required(),
     productdescription: joi.string().required(),
     sellerid: joi.string().required(),
+    isdiscount: joi.boolean().required(),
+    discount_price: joi.number().required(),
+    discount_startdate: joi.string().required(),
+    discount_enddate: joi.string().required(),
   }); 
   const { error } = schema.validate(req.body);
   if (error) {
