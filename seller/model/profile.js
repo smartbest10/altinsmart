@@ -115,10 +115,12 @@ const SelleraddcategoryModel = async (data, res) => {
 const sellerRetrievecategoryModel = async (data, res) => {
   try {
     const { sellerid } = data;
-    const form = await SellerModel.findById(sellerid).select("store_category");
+      const form = await SellerModel.findById(sellerid).select("store_category");
+      const cat = form.store_category
     const category = form.store_category.map((x) => {
       return x.categoryid;
     });
+      console.log( cat ,category)
     const categories = await CategoryModel.find({ _id: category });
     return categories;
   } catch (error) {

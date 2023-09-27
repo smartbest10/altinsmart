@@ -142,11 +142,11 @@ const deleteProductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+
 const sellerRetrievecategoryController = async (req, res, next) => {
   try {
     const { sellerid } = req.body;
     const data = { sellerid };
-
     let trainee = await sellerRetrievecategoryModel(data, res);
     return res.status(200).json({
       status_code: 200,
