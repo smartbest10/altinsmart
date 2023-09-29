@@ -1,6 +1,7 @@
 const { BrandModel } = require("../../admin/core/db/brand");
 const { CategoryModel } = require("../../admin/core/db/category");
 const { ProductModel } = require("../../seller/core/db/product");
+const { productreviewModel } = require("../core/db/productreview");
 const { handleError } = require("../core/utils");
 const { customerproductreviewModel } = require("../model/productrelated");
 
@@ -76,13 +77,15 @@ const CustomerretrieveallproductController = async (req, res, next) => {
 
 const CustomerretrievesingleproductController = async (req, res, next) => {
   const { productid } = req.body;
-  try {
-    const product = await ProductModel.findById(productid);
+    try {
+      const review = await productreviewModel.find({productid})
+        const product = await ProductModel.findById(productid);
+        const productdata = {product , review}
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "customer successfully retrieved",
-      data: product,
+      data: productdata
     });
   } catch (error) {
     console.log(error);
