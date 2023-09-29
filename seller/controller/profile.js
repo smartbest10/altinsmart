@@ -8,6 +8,7 @@ const {
   SellerupdatephotoModel,
   Sellerupdateprofile2Model,
   SelleraddbrandModel,
+  SellerremoveaccountModel,
 } = require("../model/profile");
 
 const Sellerupdateprofile1Controller = async (req, res, next) => {
@@ -234,6 +235,25 @@ const SelleraddsocialaccountController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const SellerremovesocialaccountController = async (req, res, next) => {
+  const { sellerid, account_id } = req.body;
+  try {
+    const data = {
+      sellerid,
+      account_id,
+    };
+    let trainee = await SellerremoveaccountModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 const SellerdeletesocialaccountController = async (req, res, next) => {
   const { sellerid, account_type, account_url, accountid } = req.body;
   try {
@@ -256,6 +276,21 @@ const SellerdeletesocialaccountController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const SellerretrieveprofileController = async (req, res, next) => {
+  const { sellerid} = req.body;
+  try {
+    let profile  = await SellerModel.findById(sellerid)
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data:  profile ,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 
 module.exports = {
   Sellerupdateprofile1Controller,
@@ -264,5 +299,7 @@ module.exports = {
   SelleraddsocialaccountController,
   SelleraddsocialaccountController,
   SelleraddcategoryController,
-  Sellerupdateprofile3Controller, SelleraddbrandController
+  Sellerupdateprofile3Controller,
+  SelleraddbrandController,
+  SellerremovesocialaccountController, SellerretrieveprofileController
 };

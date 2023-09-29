@@ -51,20 +51,21 @@ const createProductController = async (req, res, next) => {
   }
 };
 
+
 const updateProductController = async (req, res, next) => {
   const {
     productname,
-    productprice,
+    category,
+    sellerid,
     productid,
+    productprice,
     productbrand,
-    productimage,
     productnegiotable,
-    productdescription,
+    productdescription, images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate
   } = req.body;
   const name = productname.toLowerCase();
   const price = productprice;
   const brand = productbrand;
-  const image = productimage;
   const negiotable = productnegiotable;
   const description = productdescription;
   try {
@@ -72,10 +73,11 @@ const updateProductController = async (req, res, next) => {
       name,
       price,
       brand,
-      image,
+      images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate ,
       negiotable,
       description,
-      productid,
+      category,
+      sellerid, productid
     };
 
     let trainee = await updateProductModel(data, res);
@@ -90,6 +92,7 @@ const updateProductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+
 
 const retrieveAllProductController = async (req, res, next) => {
   try {
@@ -118,6 +121,22 @@ const retrievesellerProductController = async (req, res, next) => {
       status: true,
       message: "signup process successful",
       data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+const retrievesellersingleProductController = async (req, res, next) => {
+  const { productid } = req.body;
+
+  try {
+   const product = await ProductModel.findById(productid)
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: product
     });
   } catch (error) {
     console.log(error);
@@ -217,5 +236,5 @@ module.exports = {
   sellerRetrievecategoryController,
   sellerRetrieveorinalcategoryController,
   sellerRetrievebrandController,
-  sellerRetrieveorinalbrandController,
+  sellerRetrieveorinalbrandController, retrievesellersingleProductController
 };

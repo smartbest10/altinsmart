@@ -62,7 +62,7 @@ const sellerupdateprofile3Validation = (req, res, next) => {
     country: joi.string().required(),
     map_location: joi.string().required(),
   });
-  
+
   const { error } = schema.validate(req.body);
   if (error) {
     let err = error.details[0].message;
@@ -117,6 +117,20 @@ const selleraddaccountValidation = (req, res, next) => {
   }
   return next();
 };
+const sellerremoveaccountValidation = (req, res, next) => {
+  const schema = joi.object({
+    sellerid: joi.string().required(),
+    account_id: joi.string().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    let err = error.details[0].message;
+    // let errlen = err.split(' ')
+    // console.log('this is length ' , errlen.length)
+    handleError(err)(res);
+  }
+  return next();
+};
 
 module.exports = {
   sellerupdateprofile1Validation,
@@ -124,5 +138,6 @@ module.exports = {
   sellerupdateprofile2Validation,
   sellerupdateprofile3Validation,
   selleraddaccountValidation,
-  selleraddcategoryValidation, selleraddbrandValidation
+  selleraddcategoryValidation,
+  selleraddbrandValidation,  sellerremoveaccountValidation 
 };

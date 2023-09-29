@@ -177,6 +177,24 @@ const SelleraddaccountModel = async (data, res) => {
     // handleError(error.message)(res)
   }
 };
+const SellerremoveaccountModel = async (data, res) => {
+  try {
+      const { sellerid, account_id } = data;
+      console.log(account_id)
+    const form = await SellerModel.findByIdAndUpdate(sellerid, {
+      $pull: {
+        social_account: {
+         _id: account_id
+        },
+      },
+    });
+    return form;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+    // handleError(error.message)(res)
+  }
+};
 const SellerdeleteaccountModel = async (data, res) => {
   try {
     const { sellerid, account_type, account_url, accountid } = data;
@@ -204,5 +222,5 @@ module.exports = {
   SelleraddcategoryModel,
   SelleraddaccountModel,
   sellerRetrievecategoryModel,
-  SelleraddbrandModel, sellerRetrievebrandModel
+  SelleraddbrandModel, sellerRetrievebrandModel , SellerremoveaccountModel
 };

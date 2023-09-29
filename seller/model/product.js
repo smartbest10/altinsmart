@@ -45,7 +45,20 @@ const createProductModel = async (data, res) => {
 
 const updateProductModel = async (data, res) => {
   try {
-    const { name, price, brand, image, negiotable, description, productid } =
+    const { 
+      name,
+      price,
+      brand,
+      negiotable,
+      description,
+      category,
+      seller,
+      images,
+      isdiscount,
+      discount_price,
+      discount_startdate,
+      discount_enddate, productid
+    } =
       data;
 
     const updateproduct = await ProductModel.findByIdAndUpdate(productid, {
@@ -53,9 +66,13 @@ const updateProductModel = async (data, res) => {
         name,
         price,
         brand,
-        image,
         negiotable,
-        description,
+        description, discount: {
+          isdiscount,
+          discount_price,
+          discount_startdate,
+          discount_enddate,
+        } , category , images
       },
     });
 
@@ -93,10 +110,36 @@ const deleteProductModel = async (data, res) => {
     // handleError(error.message)(res)
   }
 };
+const retrieveallProductModel = async (data, res) => {
+  try {
+
+    const product = await ProductModel.find();
+
+    return product;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+    // handleError(error.message)(res)
+  }
+};
+
+const retrievevesingleProductModel = async (data, res) => {
+  try {
+    const { productid } = data;
+
+    const product = await ProductModel.findById(productid);
+
+    return product;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+    // handleError(error.message)(res)
+  }
+};
 
 module.exports = {
   createProductModel,
   updateProductModel,
   retrievesellerProductModel,
-  deleteProductModel,
+  deleteProductModel, retrieveallProductModel ,  retrievevesingleProductModel
 };
