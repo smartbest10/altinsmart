@@ -54,6 +54,8 @@ router.post(
     customer_check_token,
     customerValidation,
    customerretrievefollowedstoreController
-  );
+);
+  
+
   
 module.exports = router
