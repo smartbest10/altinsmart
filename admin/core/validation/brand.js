@@ -5,6 +5,7 @@ const createbrandValidation = (req, res, next) => {
     const schema = joi.object({
         adminid: joi.string().required(),
         brand: joi.string().required(),
+        brandurl: joi.string().required(),
     });
     const { error } = schema.validate(req.body);
     if (error) {
@@ -20,7 +21,8 @@ const updatebrandValidation = (req, res, next) => {
     const schema = joi.object({
         adminid: joi.string().required(),
         brandid: joi.string().required(),
-        brand: joi.string().required()
+        brand: joi.string().required(),
+        brandurl: joi.string().required(),
     });
     const { error } = schema.validate(req.body);
     if (error) {

@@ -8,7 +8,7 @@ const {
 } = require("../model/category");
 
 const createbrandController = async (req, res, next) => {
-  const { brand } = req.body;
+  const { brand  , brandurl } = req.body;
   const brandname = brand.toLowerCase();
   try {
     const checkbrand = await BrandModel.findOne({ brand: brandname });
@@ -22,7 +22,7 @@ const createbrandController = async (req, res, next) => {
     }
 
     const data = {
-     brandname
+     brandname , brandurl
     };
 
     let trainee = await createbrandModel(data, res);
@@ -72,7 +72,7 @@ const retrieveallbrandController = async (req, res, next) => {
 };
 
 const updatebrandController = async (req, res, next) => {
-  const { brand, brandid  } = req.body;
+  const { brand, brandid , brandurl } = req.body;
   const brandname = brand.toLowerCase();
   try {
       const checkbrand = await BrandModel.findOne({brand:brandname});
@@ -88,7 +88,7 @@ const updatebrandController = async (req, res, next) => {
     }
 
     const data = {
-   brandid , brandname
+   brandid , brandname , brandurl
     };
 
     let trainee = await updatebrandModel(data, res);

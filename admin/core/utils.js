@@ -8,6 +8,7 @@ const create_admin_token = (user) => {
     expiresIn: age,
   });
 };
+
 const handleError = (err) => res => {
   return res.status(400).json({
     status_code: 400,

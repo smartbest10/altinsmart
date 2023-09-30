@@ -4,11 +4,11 @@ const { BrandModel } = require("../core/db/brand");
 const createbrandModel = async (data, res) => {
     try {
       const {
-       brandname
+       brandname , brandurl
       } = data;
   
       const form = await new BrandModel({
-         brand:brandname
+         brand:brandname , brandurl
       });
       const userDetails = await form.save()
   
@@ -22,11 +22,11 @@ const createbrandModel = async (data, res) => {
   
   const updatebrandModel = async (data, res) => {
     try {
-      const { brandname , brandid} = data;
+      const { brandname , brandid , brandurl} = data;
   
       const form = await BrandModel.findByIdAndUpdate(brandid, {
         $set: {
-          brand:brandname
+          brand:brandname , brandurl
         },
       });
   

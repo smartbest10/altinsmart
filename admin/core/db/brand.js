@@ -7,6 +7,9 @@ const brandschema = new schema({
         brand:{
             type:String
         },
+        brandurl:{
+            type:String
+        },
     createdAt : {
         type: Date,
         default:Date.now
