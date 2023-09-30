@@ -16,7 +16,7 @@ const Customerschema = new schema({
     type: String,
   },
   photo: {
-    type: String,
+    type: String,  default :""
   },
   country: {
     type: String,

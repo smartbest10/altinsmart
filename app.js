@@ -12,6 +12,7 @@ const customerauth = require('./customer/route/auth')
 const customerprofile = require('./customer/route/profile')
 const customerlandingpage = require('./customer/route/landingpage')
 const customerproductrelated = require('./customer/route/productrelated')
+const customeraddress = require('./customer/route/address')
 
 // for seller 
 const sellerauth = require('./seller/route/auth')
@@ -46,6 +47,7 @@ app.use(customer, customerauth)
 app.use(customer, customerprofile)
 app.use(customer, customerlandingpage)
 app.use(customer, customerproductrelated)
+app.use(customer, customeraddress)
 
 
 //for seller

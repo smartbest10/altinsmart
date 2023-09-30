@@ -2,12 +2,14 @@ const {
   CustomerupdateprofileController,
   CustomerupdatepasswordController,
   CustomerretrieveprofileController,
+  CustomerupdatephotoController,
 } = require("../controller/profile");
 const { customer_check_token } = require("../core/authorization");
 const {
   customerupdateprofileValidation,
   customerupdatepasswordValidation,
   customerretrieveprofileValidation,
+  customerupdatephotoValidation,
 } = require("../core/validation/profile");
 
 const router = require("express").Router();
@@ -29,6 +31,12 @@ router.post(
   customer_check_token,
   customerretrieveprofileValidation,
   CustomerretrieveprofileController
+);
+router.post(
+  "/update/photo",
+  customer_check_token,
+  customerupdatephotoValidation,
+  CustomerupdatephotoController
 );
 
 module.exports = router;
