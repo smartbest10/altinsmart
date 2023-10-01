@@ -1,20 +1,18 @@
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
-const { CustomerModel } = require("../core/db/customer");
-const { customerpasswordjwt, appPassword } = require("../../helper/utils");
-const { CustomerSignupModel, CustomerLoginModel } = require("../model/auth");
-const { checkdata } = require("../core/utils");
+
 const { RiderModel } = require("../core/db/rider");
+const { RiderSignupModel, RiderLoginModel } = require("../model/auth");
+const { handleError } = require("../core/utils");
+const { riderpasswordjwt, appPassword } = require("../../helper/utils");
 
 
-const RiderSignupController = async (req, res, next) => {
+const riderSignupController = async (req, res, next) => {
   const {
     name,
     email,
     password,
-    phone,
-    
   } = req.body;
   const riderEmail = email.toLowerCase();
   try {
@@ -35,11 +33,10 @@ const RiderSignupController = async (req, res, next) => {
     const data = {
       riderEmail,name,
       Harshpassword,
-      phone,
       
     };
 
-    let trainee = await CustomerSignupModel(data, res);
+    let trainee = await RiderSignupModel(data, res);
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -48,18 +45,17 @@ const RiderSignupController = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    // handleError(error.message)(res);
+    handleError(error.message)(res);
   }
 };
 
 
-const CustomerLoginController = async (req, res, next) => {
+const riderLoginController = async (req, res, next) => {
   const { email, password } = req.body;
-  const customerEmail = email.toLowerCase()
-  console.log(customerEmail)
+  const riderEmail = email.toLowerCase()
   try {
-    const customerDetails = await CustomerModel.findOne({email: customerEmail });
-    if (!customerDetails) {
+    const riderDetails = await RiderModel.findOne({email: riderEmail });
+    if (!riderDetails) {
       return res.status(400).json({
         status_code: 400,
         status: false,
@@ -69,7 +65,7 @@ const CustomerLoginController = async (req, res, next) => {
       });
     }
 
-    const checkPassword = await bcrypt.compare(password, customerDetails.password);
+    const checkPassword = await bcrypt.compare(password, riderDetails.password);
     if (!checkPassword) {
   
       return res.status(400).json({
@@ -81,11 +77,11 @@ const CustomerLoginController = async (req, res, next) => {
       });
     }
     const data = {
-      customerEmail,
+      riderEmail,
       password,
     };
 
-    let trainee = await CustomerLoginModel(data, res);
+    let trainee = await RiderLoginModel(data, res);
 
     return res.status(200).json({
       status_code: 200,
@@ -99,11 +95,11 @@ const CustomerLoginController = async (req, res, next) => {
 };
 
 
-const CustomerNewPasswordLink = async (req, res) => {
+const riderNewPasswordLink = async (req, res) => {
   const { email } = req.body;
   const useremail = email.toLowerCase()
   try {
-    const client = await CustomerModel.findOne({ email: useremail});
+    const client = await RiderModel.findOne({ email: useremail});
     if (!client) {
 
       return res.status(400).json({
@@ -114,7 +110,7 @@ const CustomerNewPasswordLink = async (req, res) => {
       });
     }
     //function to generate token
-    const secret = customerpasswordjwt ;
+    const secret = riderpasswordjwt ;
     const payload = {
       email: useremail,
       id: client._id,
@@ -165,16 +161,16 @@ const CustomerNewPasswordLink = async (req, res) => {
 };
 
 
-const CustomerresetPassword = async (req, res) => {
+const riderresetPassword = async (req, res) => {
   try {
     const { token, password } = req.body;
-    const verifiedToken = jwt.verify(token, customerpasswordjwt);
+    const verifiedToken = jwt.verify(token, riderpasswordjwt);
     // console.log(verifiedToken.id)
     const id = verifiedToken.id;
 
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);
-    const updateclient = await CustomerModel.findByIdAndUpdate(id, {
+    const updateclient = await RiderModel.findByIdAndUpdate(id, {
       $set: {
         password : Harshpassword
       },
@@ -209,5 +205,5 @@ const CustomerresetPassword = async (req, res) => {
 };
 
 module.exports = {
-    CustomerSignupController  , CustomerLoginController , CustomerNewPasswordLink  , CustomerresetPassword 
+    riderSignupController  , riderLoginController , riderNewPasswordLink  , riderresetPassword 
 }

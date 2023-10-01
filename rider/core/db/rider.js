@@ -15,11 +15,14 @@ const Riderschema = new schema({
         phone:{
             type:String
         },
-        kin:{
-            kin_phone:{
+        photo:{
+            type:String , default : ''
+        },
+        vehicle:{
+            vehicle_number:{
                 type:String , default : ''
             },
-            kin_name:{
+            vehicle_type:{
                 type:String , default : ''
             },
         },

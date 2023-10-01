@@ -1,7 +1,7 @@
 const joi = require("joi");
 const { handleError } = require("../utils");
 
-const customersignupValidation = (req, res, next) => {
+const ridersignupValidation = (req, res, next) => {
   const schema = joi.object({
     // adminId: joi.string().required(),
    country: joi.string().required(), 
@@ -26,7 +26,7 @@ const customersignupValidation = (req, res, next) => {
   return next();
 };
 
-const customerLoginValidation = (req, res, next) => {
+const riderLoginValidation = (req, res, next) => {
   const schema = joi.object({
     email: joi.string().required().email(),
     password: joi.string().required(),
@@ -42,7 +42,7 @@ const customerLoginValidation = (req, res, next) => {
 };
 
 
-const customerforgotpasswordValidation = (req, res, next) => {
+const riderforgotpasswordValidation = (req, res, next) => {
   const schema = joi.object({
     email: joi.string().required().email(),
   });
@@ -61,7 +61,7 @@ const customerforgotpasswordValidation = (req, res, next) => {
   }
   return next();
 };
-const customerResetpasswordValidation = (req, res, next) => {
+const riderResetpasswordValidation = (req, res, next) => {
   const schema = joi.object({
     password: joi.string().required(),
     token: joi.string().required(),
@@ -83,5 +83,5 @@ const customerResetpasswordValidation = (req, res, next) => {
 };
 
 module.exports = {
-    customersignupValidation, customerLoginValidation ,  customerforgotpasswordValidation , customerResetpasswordValidation
+    ridersignupValidation, riderLoginValidation ,  riderforgotpasswordValidation , riderResetpasswordValidation
 }

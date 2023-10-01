@@ -7,14 +7,13 @@ const RiderSignupModel = async (data, res) => {
     const {
       riderEmail,name,
       Harshpassword,
-      phone,
+      
      
     } = data;
     const form = await new RiderModel ({
        name,
         email:riderEmail,
        password : Harshpassword,
-        phone,
     });
    
     const userDetails = await form.save()
@@ -39,7 +38,7 @@ const RiderLoginModel = async (data,res) => {
   try {
     const { riderEmail, } = data
      const userDetails = await RiderModel.findOne({ email:riderEmail});
-     const token = create_customer_token(userDetails._id)
+     const token = create_rider_token(userDetails._id)
      const userData = {
          id: userDetails._id,
          name: userDetails.name,
@@ -54,5 +53,5 @@ const RiderLoginModel = async (data,res) => {
      
  }
 module.exports = {
-    CustomerSignupModel , CustomerLoginModel
+  RiderSignupModel , RiderLoginModel
 }
