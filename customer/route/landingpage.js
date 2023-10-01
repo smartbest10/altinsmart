@@ -1,5 +1,6 @@
+const { retrieveallcategoryproductValidation, retrieveallsellerproductValidation } = require("../../admin/core/validation/landingpage");
 const { retrievetopcatgeriesController, subscribemailnotificationController, retrievefeaturedshopController } = require("../controller/landingpage");
-const { CustomerretrieveallbrandController, CustomerretrieveallcategoryController, CustomerretrieveallproductController, CustomerretrievesingleproductController } = require("../controller/productrleated");
+const { CustomerretrieveallbrandController, CustomerretrieveallcategoryController,  CustomerretrievesingleproductController, customerretrievecategoryproductController, customerretrievesellerproductController } = require("../controller/productrleated");
 const { customer_check_token } = require("../core/authorization");
 const { customerValidation } = require("../core/validation/auth");
 const { customerretrievesingleproductValidation } = require("../core/validation/productrelated.validation");
@@ -39,8 +40,14 @@ router.post(
   
 );
 router.post(
-    "/retrieve/product",
-    CustomerretrieveallproductController
+    "/retrieve/category/product",
+    retrieveallcategoryproductValidation,
+    customerretrievecategoryproductController
+);
+router.post(
+    "/retrieve/seller/product",
+    retrieveallsellerproductValidation,
+    customerretrievesellerproductController
 );
 router.post(
     "/retrieve/single/product",

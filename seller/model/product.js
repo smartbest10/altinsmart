@@ -10,7 +10,7 @@ const createProductModel = async (data, res) => {
       negiotable,
       description,
       category,
-      seller,
+      sellerid,
       images,
       isdiscount,
       discount_price,
@@ -26,7 +26,7 @@ const createProductModel = async (data, res) => {
       negiotable,
       description,
       category,
-      seller, discount: {
+      sellerid, discount: {
         isdiscount,
         discount_price,
         discount_startdate,

@@ -58,15 +58,14 @@ const CustomerretrieveallcategoryController = async (req, res, next) => {
   }
 };
 
-const CustomerretrieveallproductController = async (req, res, next) => {
+const customerretrievecategoryproductController = async (req, res, next) => {
   try {
-    const product = await ProductModel.find().sort({
-      createdAt: -1,
-    });
+    const { category } = req.body;
+    let product = await ProductModel.find({ category });
     return res.status(200).json({
       status_code: 200,
       status: true,
-      message: "customer successfully retrieved",
+      message: "signup process successful",
       data: product,
     });
   } catch (error) {
@@ -74,18 +73,32 @@ const CustomerretrieveallproductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
-
+const customerretrievesellerproductController = async (req, res, next) => {
+  try {
+    const { seller } = req.body;
+    let product = await ProductModel.find({ sellerid: seller });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: product,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 const CustomerretrievesingleproductController = async (req, res, next) => {
   const { productid } = req.body;
-    try {
-      const review = await productreviewModel.find({productid})
-        const product = await ProductModel.findById(productid);
-        const productdata = {product , review}
+  try {
+    const review = await productreviewModel.find({ productid });
+    const product = await ProductModel.findById(productid);
+    const productdata = { product, review };
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "customer successfully retrieved",
-      data: productdata
+      data: productdata,
     });
   } catch (error) {
     console.log(error);
@@ -95,7 +108,8 @@ const CustomerretrievesingleproductController = async (req, res, next) => {
 
 module.exports = {
   CustomerreviewproductController,
-  CustomerretrievesingleproductController ,
+  CustomerretrievesingleproductController,
   CustomerretrieveallbrandController,
-  CustomerretrieveallproductController, CustomerretrieveallcategoryController
+  customerretrievecategoryproductController,
+  CustomerretrieveallcategoryController, customerretrievesellerproductController
 };
