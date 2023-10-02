@@ -1,4 +1,3 @@
-const { CustomerModel } = require("../core/db/customer");
 const { RiderModel } = require("../core/db/rider");
 const { create_customer_token, create_rider_token } = require("../core/utils");
 
@@ -51,7 +50,45 @@ const RiderLoginModel = async (data,res) => {
       return error.message
   }
      
- }
+}
+ 
+
+const riderUpdatevehicleModel = async (data, res) => {
+  try {
+    const { vehicle_number , vehicle_type , riderid } = data;
+
+    const form = await RiderModel.findByIdAndUpdate(riderid, {
+      $set: {
+        vehicle: {
+          vehicle_number , vehicle_type
+       }
+      },
+    });
+
+    return form;
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+
+const riderUpdatephotoModel = async (data, res) => {
+  try {
+    const { photo ,  riderid } = data;
+
+    const form = await RiderModel.findByIdAndUpdate(riderid, {
+      $set: {
+       photo
+      },
+    });
+
+    return form;
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+
 module.exports = {
-  RiderSignupModel , RiderLoginModel
+  RiderSignupModel , RiderLoginModel , riderUpdatevehicleModel , riderUpdatephotoModel
 }

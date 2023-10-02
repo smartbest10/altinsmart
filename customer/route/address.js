@@ -1,4 +1,4 @@
-const { CustomerretrievesingleaddressController, CustomersetdefaultController, CustomerretrievealladdressController, CustomercreateaddressController, CustomerupdateaddressController } = require("../controller/address");
+const { CustomerretrievesingleaddressController, CustomersetdefaultController, CustomerretrievealladdressController, CustomercreateaddressController, CustomerupdateaddressController, CustomerretrievedefaultaddressController } = require("../controller/address");
 const { customer_check_token } = require("../core/authorization");
 const { customersetdefaultaddressValidation, customercreateaddressValidation, customerupdateaddressValidation } = require("../core/validation/address");
 const { customerValidation } = require("../core/validation/auth");
@@ -35,6 +35,12 @@ router.post(
   customer_check_token,
   customerValidation,
   CustomerretrievealladdressController
+);
+router.post(
+  "/retrieve/default/address",
+  customer_check_token,
+  customerValidation,
+  CustomerretrievedefaultaddressController
 );
 
 module.exports = router

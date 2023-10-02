@@ -31,6 +31,10 @@ const adminbrand = require('./admin/route/brand')
 const adminlandingpage = require('./admin/route/landingpage')
 
 
+// for admin 
+const riderauth = require('./rider/route/auth')
+
+
 //connecting the database
 coonectdb();
 
@@ -42,6 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 const customer = '/customer'
 const seller = '/seller'
 const admin = '/admin'
+const rider = '/rider'
 //for customer
 app.use(customer, customerauth)
 app.use(customer, customerprofile)
@@ -63,6 +68,11 @@ app.use(admin, admincategory)
 app.use(admin, adminseller)
 app.use(admin, adminlandingpage)
 app.use(admin, adminbrand)
+
+
+//for admin
+app.use(rider, riderauth)
+
 
 
 
