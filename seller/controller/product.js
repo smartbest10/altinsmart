@@ -132,8 +132,8 @@ const retrievesellersingleProductController = async (req, res, next) => {
 
   try {
    const product = await ProductModel.findById(productid).populate({
-    path: "brand",
-    select: "brand",
+    path: "brand category",
+    select: "brand category",
   });
     return res.status(200).json({
       status_code: 200,
