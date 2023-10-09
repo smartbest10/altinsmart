@@ -18,7 +18,7 @@ router.post(
   createtopcategoryValidation,
   deletetopcategoryController
 );
-router.get(
+router.post(
   "/retrieve/topcategory",
   admin_check_token,
   adminValidation,
