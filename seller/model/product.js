@@ -16,22 +16,34 @@ const createProductModel = async (data, res) => {
       discount_price,
       discount_startdate,
       discount_enddate,
+      productarea,
+      weight,
+      length,
+      breadth,
     } = data;
 
     const form = await new ProductModel({
       name,
       price,
       brand,
-     
+
       negiotable,
       description,
       category,
-      sellerid, discount: {
+      sellerid,
+      discount: {
         isdiscount,
         discount_price,
         discount_startdate,
         discount_enddate,
-      } , images
+      },
+      images,
+      dimension: {
+        length,
+        breadth,
+        area: productarea,
+        weight,
+      },
     });
     const productDetails = await form.save();
 
@@ -45,7 +57,7 @@ const createProductModel = async (data, res) => {
 
 const updateProductModel = async (data, res) => {
   try {
-    const { 
+    const {
       name,
       price,
       brand,
@@ -57,9 +69,13 @@ const updateProductModel = async (data, res) => {
       isdiscount,
       discount_price,
       discount_startdate,
-      discount_enddate, productid
-    } =
-      data;
+      discount_enddate,
+      productid,
+      length,
+      breadth,
+      weight,
+      productarea,
+    } = data;
 
     const updateproduct = await ProductModel.findByIdAndUpdate(productid, {
       $set: {
@@ -67,12 +83,15 @@ const updateProductModel = async (data, res) => {
         price,
         brand,
         negiotable,
-        description, discount: {
+        description,
+        discount: {
           isdiscount,
           discount_price,
           discount_startdate,
           discount_enddate,
-        } , category , images
+        },
+        category,
+        images, dimension : {length , breadth , weight , area: productarea}
       },
     });
 
@@ -112,7 +131,6 @@ const deleteProductModel = async (data, res) => {
 };
 const retrieveallProductModel = async (data, res) => {
   try {
-
     const product = await ProductModel.find();
 
     return product;
@@ -141,5 +159,7 @@ module.exports = {
   createProductModel,
   updateProductModel,
   retrievesellerProductModel,
-  deleteProductModel, retrieveallProductModel ,  retrievevesingleProductModel
+  deleteProductModel,
+  retrieveallProductModel,
+  retrievevesingleProductModel,
 };

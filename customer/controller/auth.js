@@ -13,7 +13,7 @@ const CustomerSignupController = async (req, res, next) => {
     email,
     password,
     phone,
-    
+    l
   } = req.body;
   const customerEmail = email.toLowerCase();
   try {

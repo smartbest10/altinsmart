@@ -14,8 +14,11 @@ const createProductValidation = (req, res, next) => {
     sellerid: joi.string().required(),
     isdiscount: joi.boolean().required(),
     discount_price: joi.number().required(),
-    discount_startdate: joi.string().required(),
+    discount_startdate: joi.string().required(),   
     discount_enddate: joi.string().required(),
+    length: joi.number().required(),
+    breadth: joi.number().required(),
+    weight: joi.number().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -49,6 +52,9 @@ const updateProductValidation = (req, res, next) => {
     discount_price: joi.number().required(),
     discount_startdate: joi.string().required(),
     discount_enddate: joi.string().required(),
+    length: joi.number().required(),
+    breadth: joi.number().required(),
+    weight: joi.number().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

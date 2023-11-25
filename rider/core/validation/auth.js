@@ -62,7 +62,7 @@ const riderforgotpasswordValidation = (req, res, next) => {
 const riderResetpasswordValidation = (req, res, next) => {
   const schema = joi.object({
     password: joi.string().required(),
-    token: joi.string().required(),
+    code: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -79,11 +79,38 @@ const riderResetpasswordValidation = (req, res, next) => {
   }
   return next();
 };
+
 const riderupdatevehicleValidation = (req, res, next) => {
   const schema = joi.object({
     riderid: joi.string().required(),
     vehicle_number: joi.string().required(),
     vehicle_type: joi.string().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    let err = error.details[0].message;
+    // let errlen = err.split(' ')
+    // console.log('this is length ' , errlen.length)
+    return res.status(400).json({
+      status_code: 400,
+      status: false,
+      message: err,
+      data: [],
+      error: err,
+    });
+  }
+  return next();
+};
+
+const riderupdateprofileValidation = (req, res, next) => {
+  const schema = joi.object({
+    riderid: joi.string().required(),
+    country: joi.string().required(),
+    email: joi.string().required(),
+    phone: joi.string().required(),
+    name: joi.string().required(),
+    kin_name: joi.string().required(),
+    kin_number: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -120,10 +147,32 @@ const riderupdatephotoValidation = (req, res, next) => {
   }
   return next();
 };
+const riderValidation = (req, res, next) => {
+  const schema = joi.object({
+    riderid: joi.string().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    let err = error.details[0].message;
+    // let errlen = err.split(' ')
+    // console.log('this is length ' , errlen.length)
+    return res.status(400).json({
+      status_code: 400,
+      status: false,
+      message: err,
+      data: [],
+      error: err,
+    });
+  }
+  return next();
+};
 
 module.exports = {
   ridersignupValidation,
   riderLoginValidation,
   riderforgotpasswordValidation,
-  riderResetpasswordValidation, riderupdatevehicleValidation , riderupdatephotoValidation
+  riderResetpasswordValidation,
+  riderupdatevehicleValidation,
+  riderupdatephotoValidation,
+  riderValidation, riderupdateprofileValidation
 };

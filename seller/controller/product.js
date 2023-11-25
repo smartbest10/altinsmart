@@ -9,7 +9,10 @@ const {
   deleteProductModel,
   retrievesellerProductModel,
 } = require("../model/product");
-const { sellerRetrievecategoryModel, sellerRetrievebrandModel } = require("../model/profile");
+const {
+  sellerRetrievecategoryModel,
+  sellerRetrievebrandModel,
+} = require("../model/profile");
 
 const createProductController = async (req, res, next) => {
   const {
@@ -19,23 +22,34 @@ const createProductController = async (req, res, next) => {
     productprice,
     productbrand,
     productnegiotable,
-    productdescription, images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate
+    productdescription,
+    images,
+    isdiscount,
+    discount_price,
+    discount_startdate,
+    discount_enddate, length , breadth , weight
   } = req.body;
+  await ProductModel.deleteMany()
   const name = productname.toLowerCase();
   const price = productprice;
   const brand = productbrand;
   const negiotable = productnegiotable;
   const description = productdescription;
+  const productarea = length * breadth
   try {
     const data = {
       name,
       price,
       brand,
-      images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate ,
+      images,
+      isdiscount,
+      discount_price,
+      discount_startdate,
+      discount_enddate,
       negiotable,
       description,
       category,
-      sellerid,
+      sellerid, productarea , weight ,  length , breadth 
     };
 
     let trainee = await createProductModel(data, res);
@@ -51,7 +65,6 @@ const createProductController = async (req, res, next) => {
   }
 };
 
-
 const updateProductController = async (req, res, next) => {
   const {
     productname,
@@ -61,23 +74,34 @@ const updateProductController = async (req, res, next) => {
     productprice,
     productbrand,
     productnegiotable,
-    productdescription, images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate
+    productdescription,
+    images,
+    isdiscount,
+    discount_price,
+    discount_startdate,
+    discount_enddate,length , breadth , weight , 
   } = req.body;
   const name = productname.toLowerCase();
   const price = productprice;
   const brand = productbrand;
   const negiotable = productnegiotable;
   const description = productdescription;
+  const productarea = length * breadth
   try {
     const data = {
       name,
       price,
       brand,
-      images , isdiscount ,  discount_price ,  discount_startdate ,  discount_enddate ,
+      images,
+      isdiscount,
+      discount_price,
+      discount_startdate,
+      discount_enddate,
       negiotable,
       description,
       category,
-      sellerid, productid
+      sellerid,
+      productid, length , breadth , weight , productarea
     };
 
     let trainee = await updateProductModel(data, res);
@@ -92,7 +116,6 @@ const updateProductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
-
 
 const retrieveAllProductController = async (req, res, next) => {
   try {
@@ -131,15 +154,15 @@ const retrievesellersingleProductController = async (req, res, next) => {
   const { productid } = req.body;
 
   try {
-   const product = await ProductModel.findById(productid).populate({
-    path: "brand category",
-    select: "brand category",
-  });
+    const product = await ProductModel.findById(productid).populate({
+      path: "brand category",
+      select: "brand category",
+    });
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data: product
+      data: product,
     });
   } catch (error) {
     console.log(error);
@@ -198,7 +221,7 @@ const sellerRetrieveorinalcategoryController = async (req, res, next) => {
 };
 const sellerRetrievebrandController = async (req, res, next) => {
   try {
-    console.log('req1', req.body)
+    console.log("req1", req.body);
     const { sellerid } = req.body;
     const data = { sellerid };
 
@@ -239,5 +262,6 @@ module.exports = {
   sellerRetrievecategoryController,
   sellerRetrieveorinalcategoryController,
   sellerRetrievebrandController,
-  sellerRetrieveorinalbrandController, retrievesellersingleProductController
+  sellerRetrieveorinalbrandController,
+  retrievesellersingleProductController,
 };

@@ -34,7 +34,26 @@ const checkdata = (data,res) => {
 }
 
 
+const crypto = require('crypto');
+
+// Encryption
+function encryptcard(value, secretKey) {
+  const cipher = crypto.createCipher('aes-256-cbc', secretKey);
+  let encrypted = cipher.update(value, 'utf-8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
+// Decryption
+function decryptcard(encryptedValue, secretKey) {
+  const decipher = crypto.createDecipher('aes-256-cbc', secretKey);
+  let decrypted = decipher.update(encryptedValue, 'hex', 'utf-8');
+  decrypted += decipher.final('utf-8');
+  return decrypted;
+}
+
+
 
 module.exports = {
-    create_customer_token , handleError , checkdata 
+    create_customer_token , handleError , checkdata , decryptcard , encryptcard
 }

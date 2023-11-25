@@ -1,18 +1,19 @@
 const jwt = require('jsonwebtoken');
-const { customerjwt } = require('../../helper/utils');
-const { CustomerModel } = require('./db/customer');
+const { riderJWT } = require('../../helper/utils');
+const { RiderModel } = require('./db/rider');
 
 
-const customer_check_token = async (req, res, next) => {
-  let customer = req.body.customerid
-  const checkuser = await CustomerModel.findById(customer)
+
+const rider_check_token = async (req, res, next) => {
+  let rider = req.body.riderid
+  const checkuser = await RiderModel.findById(rider)
   if (!checkuser) {
     return res.status(400).json({
       status_code: 400,
       status: false,
-      message: "customer does not exist",
+      message: "rider does not exist",
   
-      error: "customer does not exist",
+      error: "rider does not exist",
     });
   }
     let token
@@ -20,9 +21,10 @@ const customer_check_token = async (req, res, next) => {
       try {
           token = req.headers.authorization.split(' ')[1] // gotten the token, now we will decode it
 
-          const decoded = jwt.verify(token, customerjwt)
-        const user = decoded.user
-        if (customer != user) {
+          const decoded = jwt.verify(token, riderJWT)
+        const riderid = decoded.user
+        if (rider != riderid) {
+          console.og('id' , riderid , rider)
           return res.status(400).json({
             status_code: 400,
             status: false,
@@ -31,10 +33,10 @@ const customer_check_token = async (req, res, next) => {
             error: "invalid token",
           });
          }
-                 console.log(role)
 
        next()
       } catch (error) {
+        console.log(error)
           return res.status(400).json({
             status_code: 400,
             status: false,
@@ -58,5 +60,5 @@ const customer_check_token = async (req, res, next) => {
 
 
 module.exports = {
-    customer_check_token 
+    rider_check_token 
 }

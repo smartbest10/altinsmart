@@ -13,6 +13,7 @@ const customerprofile = require('./customer/route/profile')
 const customerlandingpage = require('./customer/route/landingpage')
 const customerproductrelated = require('./customer/route/productrelated')
 const customeraddress = require('./customer/route/address')
+const customercard = require('./customer/route/card')
 
 // for seller 
 const sellerauth = require('./seller/route/auth')
@@ -33,6 +34,7 @@ const adminlandingpage = require('./admin/route/landingpage')
 
 // for admin 
 const riderauth = require('./rider/route/auth')
+const riderprofile = require('./rider/route/profile')
 
 
 //connecting the database
@@ -53,6 +55,7 @@ app.use(customer, customerprofile)
 app.use(customer, customerlandingpage)
 app.use(customer, customerproductrelated)
 app.use(customer, customeraddress)
+app.use(customer, customercard)
 
 
 //for seller
@@ -72,6 +75,8 @@ app.use(admin, adminbrand)
 
 //for admin
 app.use(rider, riderauth)
+app.use(rider, riderprofile)
+app.use(rider, riderprofile)
 
 
 

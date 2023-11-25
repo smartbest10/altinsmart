@@ -6,6 +6,7 @@ const {
   customerretrievedefaultaddressModel,
 } = require("../model/address");
 
+
 const CustomercreateaddressController = async (req, res, next) => {
   const { customerid, address, postalcode, country, state, city } = req.body;
   try {
@@ -29,6 +30,8 @@ const CustomercreateaddressController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+
+
 const CustomerupdateaddressController = async (req, res, next) => {
   const { addressid, address, postalcode, country, state, city } = req.body;
   try {

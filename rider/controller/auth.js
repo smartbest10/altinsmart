@@ -9,7 +9,7 @@ const {
   riderUpdatevehicleModel,
   riderUpdatephotoModel,
 } = require("../model/auth");
-const { handleError } = require("../core/utils");
+const { handleError,   generateRandomString } = require("../core/utils");
 const { riderpasswordjwt, appPassword } = require("../../helper/utils");
 
 const riderSignupController = async (req, res, next) => {
@@ -137,6 +137,7 @@ const riderNewPasswordLink = async (req, res) => {
   const useremail = email.toLowerCase();
   try {
     const client = await RiderModel.findOne({ email: useremail });
+    
     if (!client) {
       return res.status(400).json({
         status_code: 400,
@@ -151,9 +152,17 @@ const riderNewPasswordLink = async (req, res) => {
       email: useremail,
       id: client._id,
     };
+    const riderid = client._id
     const token = jwt.sign(payload, secret, { expiresIn: "50m" });
+    const code = generateRandomString(6)
+    //updating the user auth
+    const form = await RiderModel.findByIdAndUpdate(riderid, {
+      $set: {
+       auth : {auth_token : token , auth_code : code}
+      },
+    });
 
-    const link = `https://dev-myt-page.netlify.app/reset_password/?token=${token}`;
+    const link = `code ${code}`;
 
     //start of nodemailer
     var transporter = nodemailer.createTransport({
@@ -172,7 +181,7 @@ const riderNewPasswordLink = async (req, res) => {
       from: "emmaroeneyoh@gmail.com",
       to: `${email}`,
       subject: "Nodemailer Project",
-      text: `${token}`,
+      text: `${link}`,
       // html: data,
     };
 
@@ -196,13 +205,30 @@ const riderNewPasswordLink = async (req, res) => {
 
 const riderresetPassword = async (req, res) => {
   try {
-    const { token, password } = req.body;
-    const verifiedToken = jwt.verify(token, riderpasswordjwt);
-    // console.log(verifiedToken.id)
-    const id = verifiedToken.id;
+    const { code, password } = req.body;
+    const rider = await RiderModel.findOne({'auth.auth_code': code })
+    
+    if (!rider) {
+      return res.status(400).json({
+        status_code: 400,
+        status: false,
+        message: "invalide code",
+        error: "invalide code",
+      });
+    }
+    const verifiedToken = jwt.verify(rider.auth.auth_token, riderpasswordjwt);
+    if (!verifiedToken) {
+      return res.status(400).json({
+        status_code: 400,
+        status: false,
+        message: "code expire , generate new code",
+        error: "code expire , generate new code",
+      });
+    }
 
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);
+    const id = rider._id
     const updateclient = await RiderModel.findByIdAndUpdate(id, {
       $set: {
         password: Harshpassword,

@@ -9,6 +9,20 @@ const Productschema = new schema({
         price:{
             type:Number
         },
+        dimension:{
+            length:{
+                type:Number
+            },  
+            breadth:{
+                type:Number
+            },
+            area:{
+                type:Number
+            },
+            weight:{
+                type:Number
+            },
+        },
         brand:{
             type:  mongoose.Schema.Types.ObjectId,
             ref:'brand'

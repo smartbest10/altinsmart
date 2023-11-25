@@ -26,6 +26,22 @@ const Riderschema = new schema({
                 type:String , default : ''
             },
         },
+        kin:{
+            kin_number:{
+                type:String , default : ''
+            },
+            kin_name:{
+                type:String , default : ''
+            },
+        },
+        auth:{
+            auth_token:{
+                type:String , default : ''
+            },
+            auth_code:{
+                type:String , default : ''
+            },
+        },
        
    
     createdAt : {

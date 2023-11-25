@@ -1,4 +1,5 @@
 const { RiderModel } = require("../core/db/rider");
+const { riderUpdateprofileModel, riderUpdatevehicleModel } = require("../model/profile");
 
 
 const riderretrieveprofileController = async (req, res, next) => {
@@ -17,13 +18,13 @@ const riderretrieveprofileController = async (req, res, next) => {
     }
   };
   
-  const CustomerupdateprofileController = async (req, res, next) => {
-    const { country, email, phone, name, customerid } = req.body;
-    const customerEmail = email.toLowerCase();
+  const riderupdateprofileController = async (req, res, next) => {
+    const { country, email, phone, name, riderid , kin_name , kin_number } = req.body;
+    const riderEmail = email.toLowerCase();
     //check if the email exist already , by confirming if the xist email belongs to the current user
   
-    const customer = await CustomerModel.findOne({ email: customerEmail });
-    if (customer._id != customerid) {
+    const rider = await RiderModel.findOne({ email: riderEmail });
+    if (rider._id != riderid) {
       return res.status(200).json({
         status_code: 400,
         status: true,
@@ -33,14 +34,14 @@ const riderretrieveprofileController = async (req, res, next) => {
     }
     try {
       const data = {
-        customerEmail,
+        riderEmail,
         country,
-        customerid,
+        riderid,
         phone,
-        name,
+        name, kin_name , kin_number
       };
   
-      let trainee = await CustomerUpdateprofileModel(data, res);
+      let trainee = await riderUpdateprofileModel(data, res);
       return res.status(200).json({
         status_code: 200,
         status: true,
@@ -51,4 +52,8 @@ const riderretrieveprofileController = async (req, res, next) => {
       console.log(error);
       handleError(error.message)(res);
     }
-  };
+};
+  
+module.exports = {
+  riderretrieveprofileController , riderupdateprofileController
+}
