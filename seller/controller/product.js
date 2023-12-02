@@ -27,9 +27,8 @@ const createProductController = async (req, res, next) => {
     isdiscount,
     discount_price,
     discount_startdate,
-    discount_enddate, length , breadth , weight
+    discount_enddate, length , breadth , weight , quantity
   } = req.body;
-  await ProductModel.deleteMany()
   const name = productname.toLowerCase();
   const price = productprice;
   const brand = productbrand;
@@ -49,7 +48,7 @@ const createProductController = async (req, res, next) => {
       negiotable,
       description,
       category,
-      sellerid, productarea , weight ,  length , breadth 
+      sellerid, productarea , weight ,  length , breadth , quantity 
     };
 
     let trainee = await createProductModel(data, res);
@@ -79,7 +78,7 @@ const updateProductController = async (req, res, next) => {
     isdiscount,
     discount_price,
     discount_startdate,
-    discount_enddate,length , breadth , weight , 
+    discount_enddate,length , breadth , weight , quantity
   } = req.body;
   const name = productname.toLowerCase();
   const price = productprice;
@@ -101,7 +100,7 @@ const updateProductController = async (req, res, next) => {
       description,
       category,
       sellerid,
-      productid, length , breadth , weight , productarea
+      productid, length , breadth , weight , productarea , quantity
     };
 
     let trainee = await updateProductModel(data, res);

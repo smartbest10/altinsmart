@@ -6,7 +6,8 @@ const {
   retrievesingleproductValidation,
 } = require("../core/validation/product");
 const { approvebrandController } = require("../seller/controller/brand");
-const { approvebrandValidation } = require("../seller/core/validation");
+const { adminretrievesellerorderController, adminretrieveallsellerorderController, adminretrievesinglesellerorderController, adminconfirmsellerorderController } = require("../seller/controller/order");
+const { approvebrandValidation, adminretrievesellerorderValidation, adminsellerorderValidation } = require("../seller/core/validation");
 
 const router = require("express").Router();
 
@@ -48,6 +49,39 @@ router.post(
   admin_check_token,
   adminValidation,
   retrieveallproductController
+);
+
+
+//order
+router.post(
+  "/retrieve/seller/order",
+  admin_check_token,
+  adminretrievesellerorderValidation,
+  adminretrievesellerorderController
+);
+router.post(
+  "/retrieve/all/seller/order",
+  admin_check_token,
+  adminValidation,
+  adminretrieveallsellerorderController
+);
+router.post(
+  "/retrieve/single/seller/order",
+  admin_check_token,
+  adminsellerorderValidation,
+  adminretrievesinglesellerorderController
+);
+// router.post(
+//   "/retrieve/single/seller/order",
+//   admin_check_token,
+//   adminsellerorderValidation,
+//   adminretrievesinglesellerorderController
+// );
+router.post(
+  "/confirm/seller/order",
+  admin_check_token,
+  adminsellerorderValidation,
+  adminconfirmsellerorderController
 );
 
 module.exports = router;

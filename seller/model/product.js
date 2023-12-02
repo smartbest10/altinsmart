@@ -19,11 +19,11 @@ const createProductModel = async (data, res) => {
       productarea,
       weight,
       length,
-      breadth,
+      breadth, quantity
     } = data;
 
     const form = await new ProductModel({
-      name,
+      name, quantity ,
       price,
       brand,
 
@@ -74,12 +74,12 @@ const updateProductModel = async (data, res) => {
       length,
       breadth,
       weight,
-      productarea,
+      productarea,quantity
     } = data;
 
     const updateproduct = await ProductModel.findByIdAndUpdate(productid, {
       $set: {
-        name,
+        name, quantity ,
         price,
         brand,
         negiotable,

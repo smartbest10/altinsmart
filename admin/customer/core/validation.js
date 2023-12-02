@@ -1,22 +1,9 @@
 const joi = require("joi");
 const { handleError } = require("../../core/utils");
 
-const approvebrandValidation = (req, res, next) => {
-  const schema = joi.object({
-    adminid: joi.string().required(),
-    brandid: joi.string().required(),
-  });
-  const { error } = schema.validate(req.body);
-  if (error) {
-    let err = error.details[0].message;
-    // let errlen = err.split(' ')
-    // console.log('this is length ' , errlen.length)
-    handleError(err)(res);
-  }
-  return next();
-};
 
-const adminsellerorderValidation = (req, res, next) => {
+
+const admincustomerorderValidation = (req, res, next) => {
   const schema = joi.object({
     adminid: joi.string().required(),
     orderid: joi.string().required(),
@@ -30,10 +17,10 @@ const adminsellerorderValidation = (req, res, next) => {
   }
   return next();
 };
-const adminretrievesellerorderValidation = (req, res, next) => {
+const adminretrievecustomerorderValidation = (req, res, next) => {
   const schema = joi.object({
     adminid: joi.string().required(),
-    sellerid: joi.string().required(),
+    customerid: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -46,7 +33,6 @@ const adminretrievesellerorderValidation = (req, res, next) => {
 };
 
 module.exports = {
-  approvebrandValidation,
-  adminsellerorderValidation,
-  adminretrievesellerorderValidation,
+  admincustomerorderValidation,
+  adminretrievecustomerorderValidation,
 };

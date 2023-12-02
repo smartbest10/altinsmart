@@ -14,11 +14,13 @@ const customerlandingpage = require('./customer/route/landingpage')
 const customerproductrelated = require('./customer/route/productrelated')
 const customeraddress = require('./customer/route/address')
 const customercard = require('./customer/route/card')
+const customerorder = require('./customer/route/order')
 
 // for seller 
 const sellerauth = require('./seller/route/auth')
 const sellerproduct = require('./seller/route/product');
 const sellerprofile = require('./seller/route/profile');
+const sellerorder = require('./seller/route/order');
 // const sellerbrand = require('./seller/route/brand');
 ;
 
@@ -28,6 +30,7 @@ const sellerprofile = require('./seller/route/profile');
 const adminauth = require('./admin/route/auth')
 const admincategory = require('./admin/route/category')
 const adminseller = require('./admin/route/seller')
+const admincustomer = require('./admin/route/customer')
 const adminbrand = require('./admin/route/brand')
 const adminlandingpage = require('./admin/route/landingpage')
 
@@ -35,6 +38,7 @@ const adminlandingpage = require('./admin/route/landingpage')
 // for admin 
 const riderauth = require('./rider/route/auth')
 const riderprofile = require('./rider/route/profile')
+const riderorder = require('./rider/route/order')
 
 
 //connecting the database
@@ -56,12 +60,14 @@ app.use(customer, customerlandingpage)
 app.use(customer, customerproductrelated)
 app.use(customer, customeraddress)
 app.use(customer, customercard)
+app.use(customer, customerorder)
 
 
 //for seller
 app.use(seller, sellerauth)
 app.use(seller, sellerproduct)
 app.use(seller, sellerprofile)
+app.use(seller, sellerorder)
 // app.use(seller, sellerbrand)
 
 
@@ -69,6 +75,7 @@ app.use(seller, sellerprofile)
 app.use(admin, adminauth)
 app.use(admin, admincategory)
 app.use(admin, adminseller)
+app.use(admin, admincustomer)
 app.use(admin, adminlandingpage)
 app.use(admin, adminbrand)
 
@@ -76,7 +83,7 @@ app.use(admin, adminbrand)
 //for admin
 app.use(rider, riderauth)
 app.use(rider, riderprofile)
-app.use(rider, riderprofile)
+app.use(rider, riderorder)
 
 
 

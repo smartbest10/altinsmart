@@ -19,6 +19,7 @@ const createProductValidation = (req, res, next) => {
     length: joi.number().required(),
     breadth: joi.number().required(),
     weight: joi.number().required(),
+    quantity: joi.number().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -55,6 +56,7 @@ const updateProductValidation = (req, res, next) => {
     length: joi.number().required(),
     breadth: joi.number().required(),
     weight: joi.number().required(),
+    quantity: joi.number().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

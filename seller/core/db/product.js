@@ -9,6 +9,9 @@ const Productschema = new schema({
         price:{
             type:Number
         },
+        quantity:{
+            type:Number
+        },
         dimension:{
             length:{
                 type:Number
