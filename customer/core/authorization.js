@@ -6,6 +6,7 @@ const { CustomerModel } = require('./db/customer');
 const customer_check_token = async (req, res, next) => {
   let customer = req.body.customerid
   const checkuser = await CustomerModel.findById(customer)
+  console.log('data' , checkuser)
   if (!checkuser) {
     return res.status(400).json({
       status_code: 400,

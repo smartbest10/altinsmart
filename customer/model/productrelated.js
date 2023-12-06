@@ -1,3 +1,4 @@
+const { ProductModel } = require("../../seller/core/db/product");
 const { productreviewModel } = require("../core/db/productreview");
 
 
@@ -22,6 +23,19 @@ const customerproductreviewModel = async (data, res) => {
     }
   };
   
+  const customerretrievesingleproductModel = async (data, res) => {
+    try {
+      const { productid } = data;
+        const product = await ProductModel.findById(productid)
+        const review = await productreviewModel.find({productid})
+         const data = { product , review}
+      return data;
+    } catch (error) {
+      console.log(error);
+      return error.message;
+      // handleError(error.message)(res)
+    }
+};
 module.exports = {
-    customerproductreviewModel
+    customerproductreviewModel ,  customerretrievesingleproductModel
 }

@@ -8,6 +8,7 @@ const {
 
 const customeraddwishlistController = async (req, res, next) => {
   const { customerid, productid } = req.body;
+  console.log('controller ')
   try {
     const customer = await CustomerModel.findById(customerid);
     //lets do a check to ensure that the categories dont exist twice
