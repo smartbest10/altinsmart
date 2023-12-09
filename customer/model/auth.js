@@ -1,4 +1,5 @@
 const { CustomerModel } = require("../core/db/customer");
+const { WalletModel } = require("../core/db/wallet");
 const { create_customer_token } = require("../core/utils");
 
 const CustomerSignupModel = async (data, res) => {
@@ -18,6 +19,12 @@ const CustomerSignupModel = async (data, res) => {
     });
    
     const userDetails = await form.save()
+    //create user wallet
+    const wallet =   await new WalletModel ({
+      customerid : userDetails._id
+      
+    });
+    await wallet.save()
     const token = create_customer_token(userDetails._id);
     const userData = {
       id: userDetails._id,

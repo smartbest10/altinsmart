@@ -22,11 +22,13 @@ const router = require("express").Router();
 router.post(
   "/create/product",
   createProductValidation,
+  seller_check_token,
   createProductController
 );
 router.post(
   "/update/product",
   updateProductValidation,
+  seller_check_token,
   updateProductController
 );
 router.post(

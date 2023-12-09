@@ -19,6 +19,9 @@ const Productschema = new schema({
             breadth:{
                 type:Number
             },
+            height:{
+                type:Number
+            },
             area:{
                 type:Number
             },

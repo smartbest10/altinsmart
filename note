@@ -1,0 +1,13 @@
+for order flow
+when a customer makes an order , the seller has to bring the order to the pickup station,
+once the seller brings the goods , the admin will confirm that order has item delivered.
+
+
+
+once the admin has confirmed that all items for a particular customer is complete , the admin wil confirm
+the order which the dispatchs will now see on their app. 
+
+once the dispatch accept any order , ther order will be on their list as order that needs to be delivered 
+when the dispatch pickup the order to the user , and the user gives the dispatch ordercode , the dispatch 
+can confirm that the order is delivered.
+

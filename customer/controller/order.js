@@ -1,3 +1,4 @@
+const { WalletModel } = require("../core/db/wallet");
 const {
   customeraddorderModel,
   customerretrieveallorderModel,
@@ -6,14 +7,36 @@ const {
 } = require("../model/order");
 
 const customeraddorderController = async (req, res, next) => {
-  const { customerid, delivery_fee, cart, price, shipping_address , delivery_vehicle  } = req.body;
+  const {
+    customerid,
+    delivery_fee,
+    cart,
+    price,
+    shipping_address,
+    delivery_vehicle,
+    use_wallet,
+  } = req.body;
   try {
+    //check if the customer balance is enough
+    const wallet = await WalletModel.findOne({ customerid })
+    const balance = wallet.balance
+    if (use_wallet) {
+      if (price > balance) {
+        return res.status(400).json({
+          status_code: 400,
+          status: false,
+          message: "insufficient fund",
+        });
+      }
+    }
     const data = {
       delivery_fee,
       cart,
       price,
       shipping_address,
-      customerid, delivery_vehicle
+      customerid,
+      delivery_vehicle,
+      use_wallet,
     };
 
     let trainee = await customeraddorderModel(data, res);

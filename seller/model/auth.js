@@ -1,4 +1,5 @@
 const { SellerModel } = require("../core/db/seller");
+const { sellerWalletModel } = require("../core/db/wallet");
 const { create_seller_token } = require("../core/utils");
 
 
@@ -19,6 +20,12 @@ const SellerSignupModel = async (data, res) => {
         phone, name
     });
     const userDetails = await form.save()
+     //create user wallet
+     const wallet =   await new sellerWalletModel({
+      sellerid : userDetails._id
+      
+    });
+    await wallet.save()
     const token = create_seller_token(userDetails._id);
     const userData = {
       id: userDetails._id,

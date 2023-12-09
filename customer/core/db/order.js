@@ -15,6 +15,9 @@ const order_schema = new schema({
             price: {
                 type:Number,  
             },
+            subprice: {
+                type:Number,  
+            },
             quantity: {
                 type:Number,  
             },

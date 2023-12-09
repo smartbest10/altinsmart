@@ -11,6 +11,7 @@ const createbrandController = async (req, res, next) => {
   const { brand  , brandurl } = req.body;
   const brandname = brand.toLowerCase();
   try {
+    
     const checkbrand = await BrandModel.findOne({ brand: brandname });
     if (checkbrand) {
       return res.status(400).json({

@@ -2,10 +2,12 @@ const { sellerordermodel } = require("../../seller/core/db/order");
 const { ProductModel } = require("../../seller/core/db/product");
 const { customerordermodel } = require("../core/db/order");
 const { ordercodemodel } = require("../core/db/order_code");
+const { WalletModel } = require("../core/db/wallet");
+const { wallethistoryModel } = require("../core/db/wallethistory");
 
 const customeraddorderModel = async (data, res) => {
   try {
-    const { customerid, delivery_fee, cart, price, shipping_address , delivery_vehicle } = data;
+    const { customerid, delivery_fee, cart, price, shipping_address , delivery_vehicle , use_wallet} = data;
     const form = await new customerordermodel({
       customerid,
       delivery_fee,
@@ -55,7 +57,25 @@ const customeraddorderModel = async (data, res) => {
         { $inc: { quantity: -quantity } }
     );
     });
+     //if the user is using wallet , we debit the user here
+    if (use_wallet) {
+      const wallet = await WalletModel.findOne({ customerid })
+      const walletid = wallet._id
+      await WalletModel.findByIdAndUpdate(walletid, 
+        { $inc: { balance: -price } }
+      );
+      
+      //also update the wallet trans history
+        //add to wallet history
+    const wallethistory = await new wallethistoryModel({
+      customerid,
+      walletid,
+      status:true ,
+      amount : price, order : {orderid : id, order_pay :true }
 
+    });
+    await wallethistory.save();
+    }
     return "order";
   } catch (error) {
     console.log("error", error);

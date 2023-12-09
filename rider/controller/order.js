@@ -9,6 +9,7 @@ const {
   riderpickuporderModel,
   riderconfirmorderdeliveryModel,
 } = require("../model/order");
+const { ridercheckprofileModel } = require("../model/profile");
 
 const riderretrievecustomerorderController = async (req, res, next) => {
   try {
@@ -56,10 +57,20 @@ const riderretrievesingleorderController = async (req, res, next) => {
 };
 const rideractivateorderController = async (req, res, next) => {
   const { orderid, riderid } = req.body;
-
+   //note orderid == customerorderid
   try {
+    //check rider profile
+    const riderprofile = await ridercheckprofileModel(riderid)
+    if (!riderprofile) {
+      return res.status(400).json({
+        status_code: 400,
+        status: false,
+        message: "please complete your profile to claim orders",
+      });
+    }
     //
     const order = await customerordermodel.findById(orderid)
+
     const ordervehicle = order.delivery_vehicle
     const rider = await RiderModel.findById(riderid)
     const ridervehicle = rider.vehicle.vehicle_type
@@ -86,7 +97,7 @@ const rideractivateorderController = async (req, res, next) => {
 };
 const riderpickuporderController = async (req, res, next) => {
   const { orderid, riderid } = req.body;
-
+//note orderid == customerorderid
   try {
     const data = { orderid, riderid };
 

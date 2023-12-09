@@ -1,4 +1,5 @@
 const { RiderModel } = require("../core/db/rider");
+const { riderWalletModel } = require("../core/db/wallet");
 const { create_customer_token, create_rider_token } = require("../core/utils");
 
 const RiderSignupModel = async (data, res) => {
@@ -16,6 +17,12 @@ const RiderSignupModel = async (data, res) => {
     });
    
     const userDetails = await form.save()
+      //create user wallet
+      const wallet =   await new riderWalletModel({
+        riderid : userDetails._id
+        
+      });
+    await wallet.save()
     const token = create_rider_token(userDetails._id);
     const userData = {
       id: userDetails._id,

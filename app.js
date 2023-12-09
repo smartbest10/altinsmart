@@ -15,12 +15,14 @@ const customerproductrelated = require('./customer/route/productrelated')
 const customeraddress = require('./customer/route/address')
 const customercard = require('./customer/route/card')
 const customerorder = require('./customer/route/order')
+const customerwallet = require('./customer/route/wallet')
 
 // for seller 
 const sellerauth = require('./seller/route/auth')
 const sellerproduct = require('./seller/route/product');
 const sellerprofile = require('./seller/route/profile');
 const sellerorder = require('./seller/route/order');
+const sellerwallet = require('./seller/route/wallet');
 // const sellerbrand = require('./seller/route/brand');
 ;
 
@@ -39,6 +41,7 @@ const adminlandingpage = require('./admin/route/landingpage')
 const riderauth = require('./rider/route/auth')
 const riderprofile = require('./rider/route/profile')
 const riderorder = require('./rider/route/order')
+const riderwallet = require('./rider/route/rider')
 
 
 //connecting the database
@@ -61,6 +64,7 @@ app.use(customer, customerproductrelated)
 app.use(customer, customeraddress)
 app.use(customer, customercard)
 app.use(customer, customerorder)
+app.use(customer, customerwallet)
 
 
 //for seller
@@ -68,6 +72,7 @@ app.use(seller, sellerauth)
 app.use(seller, sellerproduct)
 app.use(seller, sellerprofile)
 app.use(seller, sellerorder)
+app.use(seller, sellerwallet)
 // app.use(seller, sellerbrand)
 
 
@@ -84,6 +89,7 @@ app.use(admin, adminbrand)
 app.use(rider, riderauth)
 app.use(rider, riderprofile)
 app.use(rider, riderorder)
+app.use(rider, riderwallet)
 
 
 

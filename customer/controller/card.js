@@ -2,7 +2,7 @@ const { CardModel } = require("../core/db/card");
 const crypto = require("crypto");
 const { encryptcard } = require("../core/utils");
 const { cardsecret } = require("../../helper/utils");
-const { customercreatecardModel } = require("../model/card");
+const { customercreatecardModel, customerupdatecardModel } = require("../model/card");
 
 const CustomercreatecardController = async (req, res, next) => {
   const { customerid, card_number, card_name, card_cvv, expire_date } =
@@ -52,7 +52,7 @@ const CustomerupdatecardController = async (req, res, next) => {
       expire_date,
       cardid,
     };
-    let comment = await customerupdateaddressModel(data, res);
+    let comment = await customerupdatecardModel(data, res);
     return res.status(200).json({
       status_code: 200,
       status: true,

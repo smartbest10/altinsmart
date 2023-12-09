@@ -19,7 +19,7 @@ const createProductModel = async (data, res) => {
       productarea,
       weight,
       length,
-      breadth, quantity
+      breadth, quantity , height
     } = data;
 
     const form = await new ProductModel({
@@ -42,7 +42,7 @@ const createProductModel = async (data, res) => {
         length,
         breadth,
         area: productarea,
-        weight,
+        weight, height
       },
     });
     const productDetails = await form.save();
@@ -74,7 +74,7 @@ const updateProductModel = async (data, res) => {
       length,
       breadth,
       weight,
-      productarea,quantity
+      productarea,quantity , height
     } = data;
 
     const updateproduct = await ProductModel.findByIdAndUpdate(productid, {
@@ -91,7 +91,7 @@ const updateProductModel = async (data, res) => {
           discount_enddate,
         },
         category,
-        images, dimension : {length , breadth , weight , area: productarea}
+        images, dimension : {length , breadth , weight ,height , area: productarea}
       },
     });
 

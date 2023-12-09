@@ -18,6 +18,7 @@ const createProductValidation = (req, res, next) => {
     discount_enddate: joi.string().required(),
     length: joi.number().required(),
     breadth: joi.number().required(),
+    height: joi.number().required(),
     weight: joi.number().required(),
     quantity: joi.number().required(),
   });
@@ -55,6 +56,7 @@ const updateProductValidation = (req, res, next) => {
     discount_enddate: joi.string().required(),
     length: joi.number().required(),
     breadth: joi.number().required(),
+    height: joi.number().required(),
     weight: joi.number().required(),
     quantity: joi.number().required(),
   });

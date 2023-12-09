@@ -1,14 +1,14 @@
+
 const joi = require('joi')
 
-const customercreateordervalidation = (req, res, next) => {
+const customerfundwalletvalidation = (req, res, next) => {
   const schema = joi.object({
     customerid: joi.string().required(),
-    delivery_fee: joi.number().required(),
-    price: joi.number().required(),
-    shipping_address: joi.string().required(),
-    delivery_vehicle: joi.string().required(),
-    cart: joi.array().required(),
-    use_wallet: joi.boolean().required(),
+    walletid: joi.string().required(),
+    trx_type: joi.string().required(),
+    amount: joi.number().required(),
+    status: joi.boolean().required(),
+    
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -25,11 +25,13 @@ const customercreateordervalidation = (req, res, next) => {
   }
   return next();
 };
-const customerordervalidation = (req, res, next) => {
+
+
+const customerfundwallethistoryvalidation = (req, res, next) => {
   const schema = joi.object({
     customerid: joi.string().required(),
-    orderid: joi.string().required(),
-   
+    walletid: joi.string().required()
+    
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -48,5 +50,5 @@ const customerordervalidation = (req, res, next) => {
 };
 
 module.exports = {
-    customercreateordervalidation  , customerordervalidation
+    customerfundwallethistoryvalidation ,  customerfundwalletvalidation
 }
