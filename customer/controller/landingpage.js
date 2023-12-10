@@ -52,7 +52,7 @@ const retrievetodaydealsController = async (req, res, next) => {
       status_code: 200,
       status: true,
       message: "categories successfully retrieved",
-      data: categories,
+      data: todaydeel,
     });
   } catch (error) {
     console.log(error);
@@ -75,7 +75,7 @@ const userretrieveallbrandController = async (req, res, next) => {
 };
 const userretrievecategoryController = async (req, res, next) => {
   try {
-    const brand = await CategoryModel.find();
+    const brand = await CategoryModel.find().limit(4);
     return res.status(200).json({
       status_code: 200,
       status: true,
