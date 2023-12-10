@@ -6,6 +6,7 @@ const {
   CustomerupdatephotoModel,
 } = require("../model/profile");
 const { handleError } = require("../core/utils");
+const { WalletModel } = require("../core/db/wallet");
 
 const CustomerretrieveprofileController = async (req, res, next) => {
   const { customerid } = req.body;
