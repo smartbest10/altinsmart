@@ -25,12 +25,12 @@ const SellerSignupModel = async (data, res) => {
       sellerid : userDetails._id
       
     });
-    await wallet.save()
+   const sellerwallet =  await wallet.save()
     const token = create_seller_token(userDetails._id);
     const userData = {
       id: userDetails._id,
       email: userDetails.email,
-      token,
+      token, sellerwallet
     };
 
     return userData;

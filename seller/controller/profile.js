@@ -279,12 +279,14 @@ const SellerdeletesocialaccountController = async (req, res, next) => {
 const SellerretrieveprofileController = async (req, res, next) => {
   const { sellerid} = req.body;
   try {
-    let profile  = await SellerModel.findById(sellerid)
+    let profile = await SellerModel.findById(sellerid)
+    const sellerwallet = await sellerwallet.findOne({ sellerid })
+    const user = {profile , sellerwallet}
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data:  profile ,
+      data:  user ,
     });
   } catch (error) {
     console.log(error);
