@@ -24,12 +24,12 @@ const CustomerSignupModel = async (data, res) => {
       customerid : userDetails._id
       
     });
-    await wallet.save()
+   const userwallet =   await wallet.save()
     const token = create_customer_token(userDetails._id);
     const userData = {
       id: userDetails._id,
       email: userDetails.email,
-      token, 
+      token, userwallet
     };
 
     return userData;

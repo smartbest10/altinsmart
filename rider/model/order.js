@@ -1,10 +1,12 @@
 const { customerordermodel } = require("../../customer/core/db/order");
+const { orderactivitymodel } = require("../../customer/core/db/order_activity");
 const { ordercodemodel } = require("../../customer/core/db/order_code");
 const { sellerordermodel } = require("../../seller/core/db/order");
 const { sellerWalletModel } = require("../../seller/core/db/wallet");
 const { sellerwallethistoryModel } = require("../../seller/core/db/wallethistory");
 const { dispatchordermodel } = require("../core/db/dispatch_order");
 const { dispatchlistmodel } = require("../core/db/order");
+const { RiderModel } = require("../core/db/rider");
 const { riderWalletModel } = require("../core/db/wallet");
 const { riderwallethistoryModel } = require("../core/db/wallethistory");
 
@@ -38,7 +40,8 @@ const rideractivateneworderModel = async (data, res) => {
 const riderpickuporderModel = async (data, res) => {
   try {
     const { riderid, orderid } = data;
-
+    const rider = await RiderModel.findById(riderid)
+    const ridername = rider.name
     //update rider
     const updaterider = await dispatchordermodel.findOneAndUpdate(
       { customerorderid: orderid },
@@ -54,6 +57,14 @@ const riderpickuporderModel = async (data, res) => {
         order_status: "shipping",
       },
     });
+     //update order activity
+    const customerorder = await customerordermodel.findById(orderid)
+    const customerid = customerorder.customerid
+     const orderactivity = await new orderactivitymodel({
+       orderid , activity :`${ridername} has started shipping your order to you` , customerid
+    });
+
+    await orderactivity.save();
     //update seller
     const updateseller = await sellerordermodel.updateMany(
       { orderid },

@@ -1,5 +1,5 @@
 const { CustomerretrievesingleaddressController } = require("../controller/address");
-const { CustomercreatecardController, CustomerupdatecardController, CustomerdeletecardController, CustomerretrieveallcardController } = require("../controller/card");
+const { CustomercreatecardController, CustomerupdatecardController, CustomerdeletecardController, CustomerretrieveallcardController, CustomerretrievesinglecardController } = require("../controller/card");
 const { customer_check_token } = require("../core/authorization");
 const { customerValidation } = require("../core/validation/auth");
 const { customercreatecardValidation, customerretrievedeletecardValidation } = require("../core/validation/card");
@@ -30,7 +30,7 @@ router.post(
     "/retrieve/single/card",
     customerretrievedeletecardValidation,
   customer_check_token,
-  CustomerretrievesingleaddressController
+  CustomerretrievesinglecardController
 );
 router.post(
     "/retrieve/all/card",

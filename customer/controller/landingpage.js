@@ -1,4 +1,7 @@
+const { BrandModel } = require("../../admin/core/db/brand");
 const { CategoryModel } = require("../../admin/core/db/category");
+const { featuredshopmodel } = require("../../admin/core/db/landingpage/featuredshop");
+const { flashsalemodel } = require("../../admin/core/db/landingpage/flashsale");
 const { ProductModel } = require("../../seller/core/db/product");
 const { SellerModel } = require("../../seller/core/db/seller");
 const { CustomerModel } = require("../core/db/customer");
@@ -39,7 +42,7 @@ const retrievetodaydealsController = async (req, res, next) => {
     const calender = new Date();
     const olddate = new Date(calender);
     const setdate = olddate.setDate(calender.getDate() - 1);
-    const todaydeel = await CategoryModel.find({
+    const todaydeel = await ProductModel.find({
       createdAt: {
         $gte: setdate,
       },
@@ -50,6 +53,50 @@ const retrievetodaydealsController = async (req, res, next) => {
       status: true,
       message: "categories successfully retrieved",
       data: categories,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message);
+  }
+};
+const userretrieveallbrandController = async (req, res, next) => {
+  try {
+    const brand = await BrandModel.find();
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "categories successfully retrieved",
+      data: brand,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message);
+  }
+};
+const userretrievecategoryController = async (req, res, next) => {
+  try {
+    const brand = await CategoryModel.find();
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "categories successfully retrieved",
+      data: brand,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message);
+  }
+};
+const userretrieveflashsalesController = async (req, res, next) => {
+  try {
+    const flashsale = await flashsalemodel.find();
+    const flashsaleid = flashsale.map((x) => x.productid);
+    const brand = await ProductModel.find({ _id: { $in: flashsaleid } });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "categories successfully retrieved",
+      data: brand,
     });
   } catch (error) {
     console.log(error);
@@ -92,29 +139,37 @@ const subscribemailnotificationController = async (req, res, next) => {
 
 const retrievefeaturedshopController = async (req, res, next) => {
   try {
-      const seller = await SellerModel.find().sort({ product_purchased: -1 }).limit(10).select('photo name')
-      let store = []
-      
-      //retrieve products for the seller 
-      const products = await ProductModel.find({ sellerid: seller }).select('name price')
-      seller.map((item) => {
-          let sellerproduct = []
-          
-        //   map through each product 
-          products.map((prod) => {
-              if (prod.sellerid == item._id) {
-                  sellerproduct.push(prod)
-              }
-          })
+    const featuredseller = await featuredshopmodel.find()
+    const featuredid = featuredseller.map((x) = x.sellerid)
+    const seller = await SellerModel.find({ _id: { $in: featuredid } })
+      .sort({ product_purchased: -1 })
+      .limit(10)
+      .select("photo name");
+    let store = [];
 
-        //   create an object with the seller details and seller product 
-          const sellerstore = {
-              storeowner : item ,  storeproduct : sellerproduct
-          }
+    //retrieve products for the seller
+    const products = await ProductModel.find({ sellerid: seller }).select(
+      "name price"
+    );
+    seller.map((item) => {
+      let sellerproduct = [];
 
-        //  push to the store variable 
-          store.push(sellerstore)
-      })
+      //   map through each product
+      products.map((prod) => {
+        if (prod.sellerid == item._id) {
+          sellerproduct.push(prod);
+        }
+      });
+
+      //   create an object with the seller details and seller product
+      const sellerstore = {
+        storeowner: item,
+        storeproduct: sellerproduct,
+      };
+
+      //  push to the store variable
+      store.push(sellerstore);
+    });
 
     return res.status(200).json({
       status_code: 200,
@@ -130,5 +185,10 @@ const retrievefeaturedshopController = async (req, res, next) => {
 
 module.exports = {
   retrievetopcatgeriesController,
-  subscribemailnotificationController, retrievefeaturedshopController
+  subscribemailnotificationController,
+  retrievefeaturedshopController,
+  retrievetodaydealsController,
+  userretrieveflashsalesController,
+  userretrieveallbrandController,
+  userretrievecategoryController,
 };

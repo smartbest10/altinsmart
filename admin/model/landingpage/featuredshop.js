@@ -1,14 +1,15 @@
+const { featuredshopmodel } = require("../../core/db/landingpage/featuredshop");
 const { TopCategoryModel } = require("../../core/db/landingpage/topcategory");
 
 
-const createtopcategoryModel = async (data, res) => {
+const adminaddfeaturedshopModel = async (data, res) => {
     try {
       const {
-        categoryid
+        sellerid
       } = data;
   
-      const form = await new TopCategoryModel({
-          categoryid
+      const form = await new featuredshopmodel({
+          sellerid
       });
       const userDetails = await form.save()
      ;
@@ -21,13 +22,13 @@ const createtopcategoryModel = async (data, res) => {
     }
 };
   
-const deletetopcategoryModel = async (data, res) => {
+const admindeletefeaturedshopModel = async (data, res) => {
     try {
       const {
-        categoryid
+        sellerid
       } = data;
   
-      const form = await new TopCategoryModel.findByIdAndDelete(categoryid);
+      const form = await new featuredshopmodel.findByIdAndDelete(sellerid);
      ;
   
       return form;
@@ -39,5 +40,5 @@ const deletetopcategoryModel = async (data, res) => {
   };
   
 module.exports = {
-    createtopcategoryModel , deletetopcategoryModel
+    admindeletefeaturedshopModel ,  adminaddfeaturedshopModel
   }

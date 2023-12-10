@@ -1,6 +1,7 @@
 const { sellerordermodel } = require("../../seller/core/db/order");
 const { ProductModel } = require("../../seller/core/db/product");
 const { customerordermodel } = require("../core/db/order");
+const { orderactivitymodel } = require("../core/db/order_activity");
 const { ordercodemodel } = require("../core/db/order_code");
 const { WalletModel } = require("../core/db/wallet");
 const { wallethistoryModel } = require("../core/db/wallethistory");
@@ -98,9 +99,12 @@ const customerretrieveallorderModel = async (data, res) => {
 const customerretrievesingleorderModel = async (data, res) => {
   try {
     const { orderid } = data;
+    const order_code = await ordercodemodel.findOne({orderid})
+    const order_activity = await orderactivitymodel.find({orderid})
     const order = await customerordermodel.findById(orderid);
-
-    return order;
+    const ordercode = order_code.order_code
+    const orderdata = {ordercode , order , order_activity}
+    return orderdata;
   } catch (error) {
     console.log("error", error);
     return error.message;

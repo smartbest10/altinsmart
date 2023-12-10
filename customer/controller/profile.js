@@ -11,11 +11,13 @@ const CustomerretrieveprofileController = async (req, res, next) => {
   const { customerid } = req.body;
   try {
     const customer = await CustomerModel.findById(customerid);
+    const userwallet = await WalletModel.findOne({ customerid })
+    const user = {customer , userwallet}
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "customer successfully retrieved",
-      data: customer,
+      data: user,
     });
   } catch (error) {
     console.log(error);
