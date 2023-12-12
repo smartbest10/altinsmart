@@ -1,4 +1,5 @@
 const { SellerModel } = require("../core/db/seller");
+const { sellerWalletModel } = require("../core/db/wallet");
 const { handleError } = require("../core/utils");
 const {
   Sellerupdateprofile1Model,
@@ -280,7 +281,7 @@ const SellerretrieveprofileController = async (req, res, next) => {
   const { sellerid} = req.body;
   try {
     let profile = await SellerModel.findById(sellerid)
-    const sellerwallet = await sellerwallet.findOne({ sellerid })
+    const sellerwallet = await sellerWalletModel.findOne({ sellerid })
     const user = {profile , sellerwallet}
     return res.status(200).json({
       status_code: 200,
