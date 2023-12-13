@@ -73,6 +73,7 @@ const customerretrievecategoryproductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+
 const customerretrievesellerproductController = async (req, res, next) => {
   try {
     const { seller } = req.body;

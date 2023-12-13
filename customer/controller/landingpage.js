@@ -42,11 +42,7 @@ const retrievetodaydealsController = async (req, res, next) => {
     const calender = new Date();
     const olddate = new Date(calender);
     const setdate = olddate.setDate(calender.getDate() - 1);
-    const todaydeel = await ProductModel.find({
-      createdAt: {
-        $gte: setdate,
-      },
-    });
+    const todaydeel = await ProductModel.find().sort({ createdAt: -1 }).limit(10)
     console.log("deal", setdate, todaydeel);
     return res.status(200).json({
       status_code: 200,
@@ -140,23 +136,24 @@ const subscribemailnotificationController = async (req, res, next) => {
 const retrievefeaturedshopController = async (req, res, next) => {
   try {
     const featuredseller = await featuredshopmodel.find()
-    const featuredid = featuredseller.map((x) = x.sellerid)
+    const featuredid = featuredseller.map((x) => x.sellerid)
     const seller = await SellerModel.find({ _id: { $in: featuredid } })
-      .sort({ product_purchased: -1 })
       .limit(10)
       .select("photo name");
     let store = [];
 
     //retrieve products for the seller
-    const products = await ProductModel.find({ sellerid: seller }).select(
-      "name price"
+    const products = await ProductModel.find({ sellerid: { $in: featuredid } }).select(
+      "name price sellerid images"
     );
+
     seller.map((item) => {
       let sellerproduct = [];
 
       //   map through each product
       products.map((prod) => {
-        if (prod.sellerid == item._id) {
+        const saleid = prod.sellerid.toHexString()
+        if (saleid == item._id) {
           sellerproduct.push(prod);
         }
       });
