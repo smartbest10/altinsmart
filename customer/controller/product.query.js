@@ -1,4 +1,5 @@
 const { productquerymodel } = require("../core/db/product.query");
+const { handleError } = require("../core/utils");
 const { customercreateproductqueryModel } = require("../model/product.query");
 
 
@@ -25,9 +26,7 @@ const CustomercreateproductqueryController = async (req, res, next) => {
 const CustomerretrieveallproductqueryController = async (req, res, next) => {
     const { customerid} = req.body;
     try {
-      const data = {
-        customerid, sellerid , productid , query
-      };
+     
       let comment = await productquerymodel.find({customerid});
       return res.status(200).json({
         status_code: 200,
@@ -37,7 +36,7 @@ const CustomerretrieveallproductqueryController = async (req, res, next) => {
       });
     } catch (error) {
       console.log(error);
-      handleError(error.message)(res);
+    return  handleError(error.message)(res);
     }
   };
   
