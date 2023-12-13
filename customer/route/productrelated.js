@@ -1,8 +1,10 @@
 const { customerfollowstoreController, customerunfollowstoreController, customerretrievefollowedstoreController } = require("../controller/featurestore");
+const { CustomercreateproductqueryController, CustomerretrieveallproductqueryController } = require("../controller/product.query");
 const { CustomerreviewproductController } = require("../controller/productrleated");
 const { customeraddwishlistController, customerremovewishlistController, customerretrieveishlistController } = require("../controller/wishlist");
 const { customer_check_token } = require("../core/authorization");
 const { customerValidation } = require("../core/validation/auth");
+const { customercreateproductqueryValidation } = require("../core/validation/product.query");
 const { customercreateproductreviewValidation, customeraddwishlistValidation, customerfollowstoreValidation } = require("../core/validation/productrelated.validation");
 
 
@@ -54,6 +56,19 @@ router.post(
     customer_check_token,
     customerValidation,
    customerretrievefollowedstoreController
+);
+  
+router.post(
+    "/query/product",
+    customer_check_token,
+    customercreateproductqueryValidation,
+   CustomercreateproductqueryController
+);
+router.post(
+    "/retrieve/query/product",
+    customer_check_token,
+    customerValidation,
+   CustomerretrieveallproductqueryController
 );
   
 

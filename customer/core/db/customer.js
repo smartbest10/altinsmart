@@ -25,7 +25,14 @@ const Customerschema = new schema({
   default_address: {
     type: String, default :""
   },
-
+  auth:{
+    auth_token:{
+        type:String , default : ''
+    },
+    auth_code:{
+        type:String , default : ''
+    },
+},
   wishlist: {
     default: [],
     type: [
