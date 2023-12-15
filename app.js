@@ -23,6 +23,7 @@ const sellerproduct = require('./seller/route/product');
 const sellerprofile = require('./seller/route/profile');
 const sellerorder = require('./seller/route/order');
 const sellerwallet = require('./seller/route/wallet');
+const sellerdashboard = require('./seller/route/dashboard');
 // const sellerbrand = require('./seller/route/brand');
 ;
 
@@ -73,6 +74,7 @@ app.use(seller, sellerproduct)
 app.use(seller, sellerprofile)
 app.use(seller, sellerorder)
 app.use(seller, sellerwallet)
+app.use(seller, sellerdashboard)
 // app.use(seller, sellerbrand)
 
 
