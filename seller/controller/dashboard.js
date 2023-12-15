@@ -76,7 +76,10 @@ const SellerdashboardController = async (req, res, next) => {
 const SellerretrievereviewController = async (req, res, next) => {
   const { sellerid } = req.body;
   try {
-    const review = await productreviewModel.find({ sellerid });
+    const review = await productreviewModel.find({ sellerid }).populate({
+        path: 'customerid',
+        select: 'name email phone' // Optional: Specify fields to include/exclude
+      })
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -91,7 +94,16 @@ const SellerretrievereviewController = async (req, res, next) => {
 const SellerretrievequeryController = async (req, res, next) => {
   const { sellerid } = req.body;
   try {
-    const review = await productquerymodel.find({ sellerid });
+    const review = await productquerymodel.find({ sellerid }).populate([
+        {
+          path: 'productid',
+          select: 'name rating'
+        },
+        {
+          path: 'customerid',
+          select: 'name'
+        }
+      ])
     return res.status(200).json({
       status_code: 200,
       status: true,
