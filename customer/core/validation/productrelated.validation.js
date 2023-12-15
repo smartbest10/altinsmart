@@ -1,11 +1,14 @@
 const { handleError } = require("../utils");
 const joi = require("joi");
 
+
 const customercreateproductreviewValidation = (req, res, next) => {
   const schema = joi.object({
     review: joi.string().required(),
     productid: joi.string().required(),
     customerid: joi.string().required(),
+    sellerid: joi.string().required(),
+    rating: joi.number().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

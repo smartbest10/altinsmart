@@ -6,7 +6,14 @@ const reviewschema = new schema({
         review: {
             type:String,
         },
+        rating: {
+            type:String,
+        },
         
+        sellerid: {
+            type:  mongoose.Schema.Types.ObjectId,
+            ref:'Seller'
+        },
         customerid: {
             type:  mongoose.Schema.Types.ObjectId,
             ref:'customer'

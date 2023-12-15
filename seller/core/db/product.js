@@ -76,6 +76,9 @@ const Productschema = new schema({
         productApproved:{
             type:Boolean , default : false
         },
+        rating:{
+            type:Number , default : 0
+        },
        
    
     createdAt : {

@@ -6,12 +6,12 @@ const { handleError } = require("../core/utils");
 const { customerproductreviewModel } = require("../model/productrelated");
 
 const CustomerreviewproductController = async (req, res, next) => {
-  const { customerid, productid, review } = req.body;
+  const { customerid, sellerid, rating, productid, review } = req.body;
   try {
     const data = {
       customerid,
       productid,
-      review,
+      review, sellerid, rating,
     };
     let comment = await customerproductreviewModel(data, res);
     return res.status(200).json({
