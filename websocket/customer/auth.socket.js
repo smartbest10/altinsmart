@@ -19,7 +19,7 @@ const registercustomer = (io) => {
             Offlineuser[socket.id] = data.userid;
             // const datavalue = JSON.stringify(data)
             //  update the database for user status from offline to online
-            await CustomerModel.findByIdAndUpdate(data.customerid, {
+            await CustomerModel.findByIdAndUpdate(data.userid, {
                 $set: {
                   online_status: true,
                 },
