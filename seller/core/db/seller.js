@@ -6,7 +6,10 @@ const Sellerschema = new schema({
     storeprofile1: {
         type:Boolean, default : false
     },
- 
+    online_status: {
+        type: Boolean,
+        default: false
+      },
         email: {
             type:String,
         },

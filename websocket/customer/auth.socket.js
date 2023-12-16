@@ -1,5 +1,6 @@
 const { CustomerModel } = require("../../customer/core/db/customer");
 const { RiderModel } = require("../../rider/core/db/rider");
+const { SellerModel } = require("../../seller/core/db/seller");
 
 const Onlineuser = {};
 const Offlineuser = {};
@@ -40,6 +41,21 @@ const registercustomer = (io) => {
                 },
               });
         })
+        //coonect after logged in or signup
+        socket.on('registerseller', async (data) => {
+            console.log('checked now', data, socket.id)
+            Onlineuser[data.userid] = socket.id;
+            Usertype[data.userid] = 'seller';
+            Offlineuser[socket.id] = data.userid;
+            // const datavalue = JSON.stringify(data)
+            //  update the database for user status from offline to online
+            await SellerModel.findByIdAndUpdate(data.userid, {
+                $set: {
+                  online_status: true,
+                },
+              });
+        })
+        
 
 
         //coonect after logged in or signup
@@ -69,9 +85,17 @@ const registercustomer = (io) => {
                 },
               });
             } else if (datatype == 'seller') {
-                
+                await SellerModel.findByIdAndUpdate(userid, {
+                    $set: {
+                      online_status:false,
+                    },
+                  });
             } else if (datatype == 'rider') {
-                
+                await RiderModel.findByIdAndUpdate(userid, {
+                    $set: {
+                      online_status:false,
+                    },
+                  });
             }
            
           });

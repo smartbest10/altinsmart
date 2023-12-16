@@ -19,3 +19,14 @@ data for online flow for rider
     "userid":"657d5a2744662e4624e53f2e"
 }
 eventname to use : registerdispatch
+
+
+data for support
+{
+    "customerid":"657d5a2744662e4624e53f2e",
+    "sendertype":"user",
+    "sender":"657d5a2744662e4624e53f2e",
+    "message":"delayed product seen",
+    "type":"text"
+}
+eventname to use :recieve_customer_support

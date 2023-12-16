@@ -5,7 +5,8 @@ const ADMINschema = new schema({
  
         email: {
             type:String,
-        },
+    },
+    
         password:{
             type:String
         },
