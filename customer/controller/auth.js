@@ -11,6 +11,7 @@ const CustomerSignupController = async (req, res, next) => {
   const { country, email, password, phone, l } = req.body;
   const customerEmail = email.toLowerCase();
   try {
+    
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);
     const customer = await CustomerModel.findOne({ email: customerEmail });

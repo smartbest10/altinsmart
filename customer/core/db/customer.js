@@ -9,6 +9,10 @@ const Customerschema = new schema({
     type: String,
     default: "",
   },
+  online_status: {
+    type: Boolean,
+    default: false
+  },
   password: {
     type: String,
   },

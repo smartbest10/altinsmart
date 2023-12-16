@@ -1,3 +1,4 @@
+const { CustomerModel } = require("../../customer/core/db/customer");
 const { customerordermodel } = require("../../customer/core/db/order");
 const { ordercodemodel } = require("../../customer/core/db/order_code");
 const { dispatchordermodel } = require("../core/db/dispatch_order");
@@ -57,10 +58,10 @@ const riderretrievesingleorderController = async (req, res, next) => {
 };
 const rideractivateorderController = async (req, res, next) => {
   const { orderid, riderid } = req.body;
-   //note orderid == customerorderid
+  //note orderid == customerorderid
   try {
     //check rider profile
-    const riderprofile = await ridercheckprofileModel(riderid)
+    const riderprofile = await ridercheckprofileModel(riderid);
     if (!riderprofile) {
       return res.status(400).json({
         status_code: 400,
@@ -69,11 +70,11 @@ const rideractivateorderController = async (req, res, next) => {
       });
     }
     //
-    const order = await customerordermodel.findById(orderid)
+    const order = await customerordermodel.findById(orderid);
 
-    const ordervehicle = order.delivery_vehicle
-    const rider = await RiderModel.findById(riderid)
-    const ridervehicle = rider.vehicle.vehicle_type
+    const ordervehicle = order.delivery_vehicle;
+    const rider = await RiderModel.findById(riderid);
+    const ridervehicle = rider.vehicle.vehicle_type;
     if (ridervehicle !== ordervehicle) {
       return res.status(400).json({
         status_code: 400,
@@ -97,7 +98,7 @@ const rideractivateorderController = async (req, res, next) => {
 };
 const riderpickuporderController = async (req, res, next) => {
   const { orderid, riderid } = req.body;
-//note orderid == customerorderid
+  //note orderid == customerorderid
   try {
     const data = { orderid, riderid };
 
@@ -132,10 +133,33 @@ const riderconfirmorderdeliveryController = async (req, res, next) => {
   }
 };
 
+const riderretrieveorderdetailsController = async (req, res, next) => {
+  const { orderid } = req.body;
+
+  try {
+    //find the dispatch order and extract the orderid
+    
+    const customerorder = await customerordermodel.findById(orderid);
+    const customerid = customerorder.customerid;
+    const customer = await CustomerModel.findById(customerid);
+    const orderdata = { customerorder, customer };
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: orderdata,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+
 module.exports = {
   riderretrievecustomerorderController,
   rideractivateorderController,
   riderpickuporderController,
   riderconfirmorderdeliveryController,
-  riderretrievesingleorderController,riderretrieveallorderController
+  riderretrievesingleorderController,
+  riderretrieveallorderController, riderretrieveorderdetailsController
 };

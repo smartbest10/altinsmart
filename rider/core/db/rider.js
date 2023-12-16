@@ -5,7 +5,11 @@ const Riderschema = new schema({
  
         name: {
             type:String,
-        },
+    },
+    online_status: {
+        type: Boolean,
+        default: false
+      },
         email: {
             type:String,
         },

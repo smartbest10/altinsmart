@@ -1,4 +1,4 @@
-const { riderretrievecustomerorderController, riderretrieveallorderController, riderretrievesingleorderController, rideractivateorderController, riderpickuporderController, riderconfirmorderdeliveryController } = require("../controller/order");
+const { riderretrievecustomerorderController, riderretrieveallorderController, riderretrievesingleorderController, rideractivateorderController, riderpickuporderController, riderconfirmorderdeliveryController, riderretrieveorderdetailsController } = require("../controller/order");
 const { rider_check_token } = require("../core/authorization");
 const { riderValidation } = require("../core/validation/auth");
 const { riderorderValidation, riderconfirmdeliveryValidation } = require("../core/validation/order");
@@ -43,6 +43,12 @@ router.post(
     riderconfirmdeliveryValidation,
   rider_check_token,
   riderconfirmorderdeliveryController
+);
+router.post(
+  "/customer/order/details",
+  riderorderValidation,
+  rider_check_token,
+  riderretrieveorderdetailsController
 );
 
 module.exports = router

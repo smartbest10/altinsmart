@@ -5,6 +5,12 @@ dotenv.config({ path: ".env" });
 const { coonectdb } = require("./helper/conectdb");
 const cors = require("cors");
 const app = express();
+//socket connection 
+const http = require("http").Server(app);
+const io = require("socket.io")(http,  {
+    pingInterval: 15000, // Ping every 15 seconds
+    pingTimeout: 30000,  // Wait 30 seconds for the client to respond to pings
+  });
 const { PORT } = require("./helper/utils")
 
 //for customer
@@ -42,7 +48,9 @@ const adminlandingpage = require('./admin/route/landingpage')
 const riderauth = require('./rider/route/auth')
 const riderprofile = require('./rider/route/profile')
 const riderorder = require('./rider/route/order')
-const riderwallet = require('./rider/route/rider')
+const riderwallet = require('./rider/route/rider');
+const { registercustomer } = require("./websocket/customer/auth.socket");
+const { chatuser } = require("./websocket/customer/chat.socket");
 
 
 //connecting the database
@@ -123,6 +131,10 @@ app.use((error, req, res, next) => {
 });
 
 const port = PORT || 3000;
-app.listen(port, () => {
-  console.log("server connected", port);
-});
+
+http.listen(port, () => console.log("coonected"));
+registercustomer(io)
+chatuser(io)
+// app.listen(port, () => {
+//   console.log("server connected", port);
+// });
