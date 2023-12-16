@@ -1,3 +1,4 @@
+const { ridercustomerchatController, ridersellerchatController, riderretrievesellerController, riderretrievecustomerController, ridersupportController } = require("../controller/chat");
 const { riderretrievecustomerorderController, riderretrieveallorderController, riderretrievesingleorderController, rideractivateorderController, riderpickuporderController, riderconfirmorderdeliveryController, riderretrieveorderdetailsController } = require("../controller/order");
 const { rider_check_token } = require("../core/authorization");
 const { riderValidation } = require("../core/validation/auth");
@@ -51,4 +52,36 @@ router.post(
   riderretrieveorderdetailsController
 );
 
+
+//chat 
+router.post(
+  "/retrieve/customer/chat",
+riderValidation,
+  rider_check_token,
+  ridercustomerchatController
+)
+router.post(
+  "/retrieve/seller/chat",
+riderValidation,
+  rider_check_token,
+  ridersellerchatController
+)
+router.post(
+  "/retrieve/seller",
+  riderValidation,
+  rider_check_token,
+  riderretrievesellerController
+)
+router.post(
+  "/retrieve/customer",
+  riderValidation,
+  rider_check_token,
+  riderretrievecustomerController
+)
+router.post(
+  "/support/chat",
+  riderValidation,
+  rider_check_token,
+  ridersupportController
+)
 module.exports = router

@@ -1,4 +1,4 @@
-const { CustomerriderchatController, CustomerretrieveridersController } = require("../controller/chat");
+const { CustomerriderchatController, CustomerretrieveridersController, CustomersupportController } = require("../controller/chat");
 const { customeraddorderController, customerretrieveallordercontroller, customerretrievesingleordercontroller, customerconfirmordercontroller } = require("../controller/order");
 const { CustomerallordercodeController, CustomersingleordercodeController } = require("../controller/order_code");
 const { customer_check_token } = require("../core/authorization");
@@ -59,5 +59,11 @@ router.post(
   customerValidation,
   customer_check_token,
   CustomerretrieveridersController
+)
+router.post(
+  "/support/chat",
+  customerValidation,
+  customer_check_token,
+  CustomersupportController
 )
 module.exports = router
