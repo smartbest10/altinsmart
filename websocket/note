@@ -1,0 +1,21 @@
+
+data for chat :
+{
+    "sender":"657d5a2744662e4624e53f2e",  //the id of the person sending the chat
+    "reciever":"657d5f8ca76c62372aae5434", // the id of the person recieving the chat
+    "type":"image",  //type of chat , image or text
+    "message":"product.com2 caton" // chat , text or image url
+}
+
+eventname to use : recieve_customer_dispatch
+
+data for online flow for customer
+{
+    "userid":"657d5a2744662e4624e53f2e"
+}
+eventname to use : registercustomer
+data for online flow for rider
+{
+    "userid":"657d5a2744662e4624e53f2e"
+}
+eventname to use : registerdispatch
