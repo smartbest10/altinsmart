@@ -5,13 +5,47 @@ const { productreviewModel } = require("../core/db/productreview");
 const { handleError } = require("../core/utils");
 const { customerproductreviewModel } = require("../model/productrelated");
 
+const userproductnamesearchController = async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    let trainee = await ProductModel.find({ $text: { $search: name } });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "login process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+const userproductnameController = async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    let trainee = await ProductModel.find({ $text: { $search: name } }).select(
+      "name"
+    );
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "login process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 const CustomerreviewproductController = async (req, res, next) => {
   const { customerid, sellerid, rating, productid, review } = req.body;
   try {
     const data = {
       customerid,
       productid,
-      review, sellerid, rating,
+      review,
+      sellerid,
+      rating,
     };
     let comment = await customerproductreviewModel(data, res);
     return res.status(200).json({
@@ -112,5 +146,8 @@ module.exports = {
   CustomerretrievesingleproductController,
   CustomerretrieveallbrandController,
   customerretrievecategoryproductController,
-  CustomerretrieveallcategoryController, customerretrievesellerproductController
+  CustomerretrieveallcategoryController,
+  customerretrievesellerproductController,
+  userproductnamesearchController,
+  userproductnameController,
 };

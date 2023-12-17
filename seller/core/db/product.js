@@ -86,6 +86,7 @@ const Productschema = new schema({
         default:Date.now
     }
 })
+Productschema.index({name: 'text'});
 const ProductModel = mongoose.model('Product', Productschema )
 module.exports = {
     ProductModel

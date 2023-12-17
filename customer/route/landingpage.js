@@ -17,11 +17,13 @@ const {
   CustomerretrievesingleproductController,
   customerretrievecategoryproductController,
   customerretrievesellerproductController,
+  userproductnamesearchController,
+  userproductnameController,
 } = require("../controller/productrleated");
 const { customer_check_token } = require("../core/authorization");
 const { customerValidation } = require("../core/validation/auth");
 const {
-  customerretrievesingleproductValidation,
+  customerretrievesingleproductValidation, customersearchproductValidation,
 } = require("../core/validation/productrelated.validation");
 const {
   customeremailsubscriptionValidation,
@@ -39,6 +41,16 @@ router.post(
   "/subscribe/email",
   customeremailsubscriptionValidation,
   subscribemailnotificationController
+);
+router.post(
+  "/search/product",
+  customersearchproductValidation,
+ userproductnamesearchController
+);
+router.post(
+  "/search/name",
+  customersearchproductValidation,
+ userproductnameController
 );
 
 //for un authorised access

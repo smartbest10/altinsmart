@@ -1,6 +1,6 @@
 const { customerfollowstoreController, customerunfollowstoreController, customerretrievefollowedstoreController } = require("../controller/featurestore");
 const { CustomercreateproductqueryController, CustomerretrieveallproductqueryController } = require("../controller/product.query");
-const { CustomerreviewproductController } = require("../controller/productrleated");
+const { CustomerreviewproductController, userproductnamesearchController } = require("../controller/productrleated");
 const { customeraddwishlistController, customerremovewishlistController, customerretrieveishlistController } = require("../controller/wishlist");
 const { customer_check_token } = require("../core/authorization");
 const { customerValidation } = require("../core/validation/auth");
@@ -70,6 +70,8 @@ router.post(
     customerValidation,
    CustomerretrieveallproductqueryController
 );
+  
+
   
 
   

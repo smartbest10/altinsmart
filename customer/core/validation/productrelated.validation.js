@@ -34,6 +34,19 @@ const customeraddwishlistValidation = (req, res, next) => {
   }
   return next();
 };
+const customersearchproductValidation = (req, res, next) => {
+  const schema = joi.object({
+    name: joi.string().required()
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    let err = error.details[0].message;
+    // let errlen = err.split(' ')
+    // console.log('this is length ' , errlen.length)
+  return  handleError(err)(res);
+  }
+  return next();
+};
 
 const customerfollowstoreValidation = (req, res, next) => {
   const schema = joi.object({
@@ -68,5 +81,5 @@ module.exports = {
   customercreateproductreviewValidation,
   customeraddwishlistValidation,
   customerfollowstoreValidation,
-  customerretrievesingleproductValidation,
+  customerretrievesingleproductValidation, customersearchproductValidation
 };
