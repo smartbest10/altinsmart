@@ -107,7 +107,48 @@ const customerretrievecategoryproductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const customerretrievebrandproductController = async (req, res, next) => {
+  try {
+    const { brand } = req.body;
+    let product = await ProductModel.find({ brand });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: product,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 
+const customerfilterproductcontroller = async (req, res, next) => {
+  try {
+    const { category, brand } = req.body;
+    var query = { $and: [] };
+
+    if (category != "") {
+      query.$and.push({ category: category });
+    }
+
+    if (brand != "") {
+      query.$and.push({ brand: brand });
+    }
+
+    const product = await ProductModel.find(query);
+
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "all users logs retrieved",
+      data: product,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 const customerretrievesellerproductController = async (req, res, next) => {
   try {
     const { seller } = req.body;
@@ -150,4 +191,6 @@ module.exports = {
   customerretrievesellerproductController,
   userproductnamesearchController,
   userproductnameController,
+  customerretrievebrandproductController,
+  customerfilterproductcontroller,
 };

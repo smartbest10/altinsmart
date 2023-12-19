@@ -19,6 +19,8 @@ const {
   customerretrievesellerproductController,
   userproductnamesearchController,
   userproductnameController,
+  customerfilterproductcontroller,
+  customerretrievebrandproductController,
 } = require("../controller/productrleated");
 const { customer_check_token } = require("../core/authorization");
 const { customerValidation } = require("../core/validation/auth");
@@ -61,6 +63,14 @@ router.post(
   "/retrieve/category/product",
   retrieveallcategoryproductValidation,
   customerretrievecategoryproductController
+);
+router.post(
+  "/retrieve/brand/product",
+  customerretrievebrandproductController
+);
+router.post(
+  "/filter/product",
+  customerfilterproductcontroller
 );
 router.post(
   "/retrieve/seller/product",
