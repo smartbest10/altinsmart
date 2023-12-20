@@ -46,12 +46,14 @@ const CustomerLoginModel = async (data,res) => {
   try {
     const { customerEmail, } = data
      const userDetails = await CustomerModel.findOne({ email:customerEmail});
-     const token = create_customer_token(userDetails._id)
+    const token = create_customer_token(userDetails._id)
+    const customerid = userDetails._id
+    const customerwallet = await WalletModel.findOne({customerid})
      const userData = {
          id: userDetails._id,
          name: userDetails.name,
          email: userDetails.email,
-         token,
+         token, customerwallet
       }
    
      return userData

@@ -22,12 +22,12 @@ const RiderSignupModel = async (data, res) => {
         riderid : userDetails._id
         
       });
-    await wallet.save()
+   const riderwallet = await wallet.save()
     const token = create_rider_token(userDetails._id);
     const userData = {
       id: userDetails._id,
       email: userDetails.email,
-      token, name
+      token, name , riderwallet
     };
 
     return userData;
@@ -44,12 +44,14 @@ const RiderLoginModel = async (data,res) => {
   try {
     const { riderEmail, } = data
      const userDetails = await RiderModel.findOne({ email:riderEmail});
-     const token = create_rider_token(userDetails._id)
+    const token = create_rider_token(userDetails._id)
+    const riderid = userDetails._id
+    const riderwallet = await  riderWalletModel.findOne({riderid})
      const userData = {
          id: userDetails._id,
          name: userDetails.name,
          email: userDetails.email,
-         token,
+         token, riderwallet
       }
    
      return userData

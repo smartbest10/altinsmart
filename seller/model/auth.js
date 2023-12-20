@@ -47,11 +47,13 @@ const SellerLoginModel = async (data,res) => {
   try {
     const {   sellerEmail, } = data
     const userDetails = await SellerModel.findOne({ email:   sellerEmail });
-     const token = create_seller_token(userDetails._id)
+    const token = create_seller_token(userDetails._id)
+    const sellerid = userDetails._id
+    const sellerwallet =  await  sellerWalletModel.findOne({sellerid})
      const userData = {
          id: userDetails._id,
          email: userDetails.email,
-         token,
+         token, sellerwallet
       }
    
      return userData
