@@ -1,3 +1,4 @@
+const { customer_emailModel } = require("../core/db/confirm.email");
 const { CustomerModel } = require("../core/db/customer");
 const { WalletModel } = require("../core/db/wallet");
 const { create_customer_token } = require("../core/utils");
@@ -39,6 +40,37 @@ const CustomerSignupModel = async (data, res) => {
    
   }
 };
+const CustomersendconfirmemailModel = async (data, res) => {
+  try {
+    const {
+     email , code
+     
+    } = data;
+    console.log('posi')
+    const checkemail = await customer_emailModel.findOne({ email })
+    console.log('user' , checkemail)
+    if (checkemail) {
+      const updatecode = await customer_emailModel.findOneAndUpdate({email}, {
+        $set: {
+          code
+        },
+      });
+
+      return 'success'
+    }
+    const form = await new customer_emailModel ({
+       email , code
+    });
+   
+    const userDetails = await form.save()
+   
+    return 'success'
+  } catch (error) {
+    console.log('error' , error);
+    return error.message;
+   
+  }
+};
 
 
 
@@ -63,5 +95,5 @@ const CustomerLoginModel = async (data,res) => {
      
  }
 module.exports = {
-    CustomerSignupModel , CustomerLoginModel
+    CustomerSignupModel , CustomerLoginModel , CustomersendconfirmemailModel
 }

@@ -3,15 +3,22 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const { CustomerModel } = require("../core/db/customer");
 const { customerpasswordjwt, appPassword } = require("../../helper/utils");
-const { CustomerSignupModel, CustomerLoginModel } = require("../model/auth");
+const {
+  CustomerSignupModel,
+  CustomerLoginModel,
+  CustomersendconfirmemailModel,
+} = require("../model/auth");
 const { checkdata, handleError } = require("../core/utils");
 const { generateRandomString } = require("../../rider/core/utils");
+const {
+  adminResetpasswordValidation,
+} = require("../../admin/core/validation/auth");
+const { customer_emailModel } = require("../core/db/confirm.email");
 
 const CustomerSignupController = async (req, res, next) => {
   const { country, email, password, phone, l } = req.body;
   const customerEmail = email.toLowerCase();
   try {
-    
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);
     const customer = await CustomerModel.findOne({ email: customerEmail });
@@ -156,6 +163,73 @@ const CustomerNewPasswordLink = async (req, res) => {
     handleError(error.message)(res);
   }
 };
+const Customersendconfirmemailcontroller = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const code = generateRandomString(5);
+    const data = { email, code };
+    const sendemail = await CustomersendconfirmemailModel(data, res);
+    //start of nodemailer
+    var transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: "emmaroeneyoh@gmail.com",
+
+        pass: appPassword,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    var mailOptions = {
+      from: "emmaroeneyoh@gmail.com",
+      to: `${email}`,
+      subject: "Nodemailer Project",
+      text: `${code}`,
+      // html: data,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    //end of nodemailer
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "mail sent through",
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+const Customerconfirmemailcontroller = async (req, res) => {
+  const { email, code } = req.body;
+  try {
+    const checkcode = await customer_emailModel.findOne({ code });
+    if (!checkcode) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "wrong code ",
+      });
+    }
+
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 
 const CustomerresetPassword = async (req, res) => {
   try {
@@ -273,9 +347,9 @@ const mobilecustomerNewPasswordLink = async (req, res) => {
 const mobilecustomerresetPassword = async (req, res) => {
   try {
     const { code, password } = req.body;
-    console.log(code)
-    const rider = await CustomerModel.findOne({"auth.auth_code": code });
-   console.log('rider' , rider)
+    console.log(code);
+    const rider = await CustomerModel.findOne({ "auth.auth_code": code });
+    console.log("rider", rider);
     if (!rider) {
       return res.status(400).json({
         status_code: 400,
@@ -336,5 +410,9 @@ module.exports = {
   CustomerSignupController,
   CustomerLoginController,
   CustomerNewPasswordLink,
-  CustomerresetPassword, mobilecustomerresetPassword , mobilecustomerNewPasswordLink
+  CustomerresetPassword,
+  mobilecustomerresetPassword,
+  mobilecustomerNewPasswordLink,
+  Customersendconfirmemailcontroller,
+  Customerconfirmemailcontroller,
 };

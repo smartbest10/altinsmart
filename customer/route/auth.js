@@ -5,6 +5,9 @@ const {
   CustomerNewPasswordLink,
   mobilecustomerNewPasswordLink,
   mobilecustomerresetPassword,
+  Customerconfirmemail,
+  Customersendconfirmemailcontroller,
+  Customerconfirmemailcontroller,
 } = require("../controller/auth");
 const {
   customersignupValidation,
@@ -12,6 +15,8 @@ const {
   customerforgotpasswordValidation,
   customerResetpasswordValidation,
   mobilecustomerResetpasswordValidation,
+  customerconfirmemailValidation,
+  customercheckemailValidation,
 } = require("../core/validation/auth");
 
 const router = require("express").Router();
@@ -37,6 +42,16 @@ router.post(
   "/reset/password",
   customerResetpasswordValidation,
   CustomerresetPassword
+);
+router.post(
+  "/send/email",
+  customerconfirmemailValidation,
+  Customersendconfirmemailcontroller
+);
+router.post(
+  "/check/email",
+  customercheckemailValidation,
+  Customerconfirmemailcontroller
 );
 
 module.exports = router;
